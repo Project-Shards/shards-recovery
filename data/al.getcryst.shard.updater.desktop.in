@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=shard_updater
+Exec=shard_updater
+Icon=al.getcryst.shard.updater
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true

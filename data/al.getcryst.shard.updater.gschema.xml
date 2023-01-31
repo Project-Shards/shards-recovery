@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="shard_updater">
+	<schema id="al.getcryst.shard.updater" path="/al/getcryst/shard/updater/">
+	</schema>
+</schemalist>

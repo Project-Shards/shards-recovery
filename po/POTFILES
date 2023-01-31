@@ -1,0 +1,6 @@
+data/al.getcryst.shard.updater.desktop.in
+data/al.getcryst.shard.updater.appdata.xml.in
+data/al.getcryst.shard.updater.gschema.xml
+src/main.py
+src/window.py
+src/window.ui
