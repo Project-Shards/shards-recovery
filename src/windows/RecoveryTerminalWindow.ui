@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.2"/>
+  <template class="RecoveryTerminalWindow" parent="AdwBin">
+    <style>
+          <class name="window"/>
+        </style>
+        <property name="halign">center</property>
+        <property name="valign">center</property>
+        <property name="margin-start">100</property>
+        <property name="margin-top">200</property>
+        <property name="margin-end">100</property>
+        <property name="margin-bottom">200</property>
+    <child>
+      <object class="GtkBox">
+        <property name="halign">fill</property>
+        <property name="valign">fill</property>
+        <property name="vexpand">true</property>
+        <property name="hexpand">true</property>
+        <property name="orientation">vertical</property>
+        <property name="homogeneous">true</property>
+        <child>
+          <object class="AdwBin">
+            <property name="halign">fill</property>
+            <property name="valign">fill</property>
+            <property name="hexpand">true</property>
+            <property name="vexpand">true</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

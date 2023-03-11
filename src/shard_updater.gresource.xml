@@ -2,6 +2,9 @@
 <gresources>
   <gresource prefix="/al/getcryst/shard/updater">
     <file preprocess="xml-stripblanks">window.ui</file>
+    <file preprocess="xml-stripblanks">HeaderBar.ui</file>
+    <file preprocess="xml-stripblanks">widgets/MenuButton.ui</file>
+    <file preprocess="xml-stripblanks">windows/RecoveryTerminalWindow.ui</file>
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
   </gresource>
 </gresources>

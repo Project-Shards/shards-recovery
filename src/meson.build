@@ -29,6 +29,9 @@ shard_updater_sources = [
   '__init__.py',
   'main.py',
   'window.py',
+  'HeaderBar.py'
 ]
 
 install_data(shard_updater_sources, install_dir: moduledir)
+subdir('windows')
+subdir('widgets')
