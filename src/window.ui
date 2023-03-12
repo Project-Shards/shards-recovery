@@ -33,10 +33,7 @@
             </style>
             <property name="halign">center</property>
             <property name="valign">center</property>
-            <property name="margin-start">100</property>
             <property name="margin-top">200</property>
-            <property name="margin-end">100</property>
-            <property name="margin-bottom">200</property>
             <child>
               <object class="GtkBox">
                 <property name="orientation">vertical</property>
@@ -125,11 +122,33 @@
                 </child>
                 <child>
                   <object class="GtkListBox">
+                    <property name="margin-bottom">12</property>
                     <child>
                       <object class="AdwActionRow" id="shard_shell_button">
                         <property name="icon-name">utilities-terminal-symbolic</property>
                         <property name="title">Open a Shard Linux shell</property>
                         <property name="subtitle">Opens a terminal with a root shell inside of your Shard Linux installation</property>
+                        <property name="activatable-widget">
+                          <object class="GtkButton">
+                            <property name="label"> </property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <style>
+                      <class name="boxed-list"/>
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkListBox">
+                    <property name="margin-bottom">12</property>
+                    <child>
+                      <object class="AdwActionRow" id="gparted_button">
+                        <property name="margin-bottom">0</property>
+                        <property name="icon-name">org.gnome.DiskUtility-symbolic</property>
+                        <property name="title">Open Gparted</property>
+                        <property name="subtitle">Open Gparted to format or partition your disks </property>
                         <property name="activatable-widget">
                           <object class="GtkButton">
                             <property name="label"> </property>

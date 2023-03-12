@@ -18,12 +18,19 @@
 
 from gi.repository import Gtk, Adw
 from shard_updater.widgets.MenuButton import MenuButton
+from shard_updater.HeaderBar import HeaderBar
 
 @Gtk.Template(resource_path='/al/getcryst/shard/updater/windows/RecoveryTerminalWindow.ui')
 class RecoveryTerminalWindow(Adw.Bin):
     __gtype_name__ = 'RecoveryTerminalWindow'
 
-    def __init__(self, window, headerbar, **kwargs):
+    def __init__(
+            self,
+            window,
+            headerbar: HeaderBar,
+            command: list=["bash"],
+            **kwargs
+    ):
         super().__init__(**kwargs)
         self.window = window
         self.headerbar = headerbar

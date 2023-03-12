@@ -18,6 +18,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from gi.repository import Adw, Gtk, Gdk
+import subprocess
 from shard_updater.windows.RecoveryTerminalWindow import RecoveryTerminalWindow
 from shard_updater.windows.InstallWindow import InstallWindow
 from shard_updater.widgets.MenuButton import MenuButton
@@ -28,6 +29,7 @@ class ShardUpdaterWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'ShardUpdaterWindow'
 
     #label = Gtk.Template.Child()
+    gparted_button = Gtk.Template.Child()
     shard_shell_button = Gtk.Template.Child()
     recovery_button = Gtk.Template.Child()
     browser_button = Gtk.Template.Child()
@@ -49,6 +51,10 @@ class ShardUpdaterWindow(Adw.ApplicationWindow):
         self.current_window = self.main_window
         self.recovery_button.connect("activated", self.show_recovery_terminal)
         self.reinstall_button.connect("activated", self.show_install_window)
+        self.gparted_button.connect("activated", self.open_gparted)
+        self.browser_button.connect("activated", self.open_browser)
+        self.update_button.connect("activated", self.show_update_window)
+        self.shard_shell_button.connect("activated", self.show_shard_terminal)
 
         css=b"""
         .window {
@@ -88,12 +94,34 @@ class ShardUpdaterWindow(Adw.ApplicationWindow):
             priority=Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
         )
 
+    def open_gparted(self, widget):
+        print("open gparted")
+        subprocess.Popen(["gparted"])
+
+    def open_browser(self, widget):
+        print("open browser")
+        subprocess.Popen(["firefox"])
+
     def show_install_window(self, widget):
         print("show install window")
         self.current_window.set_visible(False)
         self.install_window=InstallWindow(self, self.header_bar)
         self.window_box.append(self.install_window)
         self.current_window = self.install_window
+
+    def show_shard_terminal(self, widget):
+        print("show shard terminal")
+        self.current_window.set_visible(False)
+        self.shard_terminal=RecoveryTerminalWindow(self, self.header_bar, command=["/usr/share/shard-updater/shard-shell.sh"])
+        self.window_box.append(self.shard_terminal)
+        self.current_window = self.shard_terminal
+
+    def show_update_window(self, widget):
+        print("show update window")
+        self.current_window.set_visible(False)
+        self.update_window=RecoveryTerminalWindow(self, self.header_bar, command=["/usr/share/shard-updater/update.sh"])
+        self.window_box.append(self.update_window)
+        self.current_window = self.update_window
 
     def show_recovery_terminal(self, widget):
         print("show recovery terminal")
