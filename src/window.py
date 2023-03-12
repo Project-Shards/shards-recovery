@@ -65,6 +65,20 @@ class ShardUpdaterWindow(Adw.ApplicationWindow):
         .topbutton {
             font-weight: normal;
         }
+        .disk {
+            padding-left: 50px;
+            padding-right: 50px;
+            padding-top: 30px;
+            padding-bottom: 30px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px 1px alpha(black, 0.13),
+              0 1px 1px 1px alpha(black, 0.09),
+              0 1px 1px 1px alpha(black, 0.04),
+              0 0 0 1px alpha(black, .05);
+        }
+        .rounded {
+            border-radius: 10px;
+        }
         """
         provider = Gtk.CssProvider()
         provider.load_from_data(data=css)

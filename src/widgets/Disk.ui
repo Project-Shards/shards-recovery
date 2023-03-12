@@ -2,10 +2,10 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <requires lib="Adw" version="1.2"/>
-  <template class="Disk" parent="AdwBin">
-
+  <template class="Disk" parent="GtkToggleButton">
     <style>
-      <class name="window"/>
+      <class name="disk"/>
+      <class name="flat"/>
     </style>
     <child>
       <object class="GtkBox">
@@ -15,7 +15,7 @@
         <child>
           <object class="GtkImage" id="DiskType">
             <property name="icon-name">drive-harddisk-symbolic</property>
-            <property name="pixel-size">75</property>
+            <property name="pixel-size">100</property>
             <property name="margin-bottom">5</property>
           </object>
         </child>

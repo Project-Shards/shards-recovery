@@ -24,12 +24,12 @@ class DiskSelect(Gtk.Box):
     __gtype_name__ = 'DiskSelect'
 
     disk_list = Gtk.Template.Child()
+    continue_button = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        testDisk = Disk(diskname="/dev/sda", disksize="10bb (bottombytes)", disktype="SSD")
-        testDisk2 = Disk(diskname="/dev/sdb", disksize="100bb (bottombytes)", disktype="SSD")
-
+        testDisk = Disk(diskname="/dev/sda", disksize="10bla (blahajs)", disktype="SSD", group=None)
+        testDisk2 = Disk(diskname="/dev/sdb", disksize="10bla (blahajs)", disktype="SSD", group=testDisk)
         self.disk_list.append(testDisk)
         self.disk_list.append(testDisk2)

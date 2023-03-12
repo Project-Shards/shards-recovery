@@ -18,6 +18,7 @@
 
 from gi.repository import Gtk, Adw
 from shard_updater.windows.InstallWindows.DiskSelect import DiskSelect
+from shard_updater.windows.InstallWindows.InstallProgress import InstallProgress
 from shard_updater.widgets.MenuButton import MenuButton
 
 @Gtk.Template(resource_path='/al/getcryst/shard/updater/windows/InstallWindow.ui')
@@ -25,6 +26,7 @@ class InstallWindow(Adw.Bin):
     __gtype_name__ = 'InstallWindow'
 
     Disk_select = Gtk.Template.Child()
+    Install_progress = Gtk.Template.Child()
     carousel = Gtk.Template.Child()
 
     def __init__(self, window, headerbar, **kwargs):
@@ -35,6 +37,11 @@ class InstallWindow(Adw.Bin):
         self.headerbar.remove_all_buttons()
         button = MenuButton(label="Quit Installer", on_clicked=self.on_quit_button_clicked)
         self.headerbar.add_button(button)
+        self.Disk_select.continue_button.connect("clicked", self.on_disk_select_next_clicked)
 
     def on_quit_button_clicked(self, button):
         self.window.switch_to_main()
+
+    def on_disk_select_next_clicked(self, button):
+        self.carousel.scroll_to(self.Install_progress, True)
+        self.headerbar.remove_all_buttons()

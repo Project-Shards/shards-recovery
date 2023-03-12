@@ -7,7 +7,7 @@
               <class name="window"/>
             </style>
             <property name="halign">center</property>
-            <property name="valign">fill</property>
+            <property name="valign">center</property>
             <property name="margin-top">100</property>
             <property name="margin-bottom">100</property>
 
@@ -26,6 +26,10 @@
                 <property name="interactive">false</property>
                 <child>
                   <object class="DiskSelect" id="Disk_select">
+                  </object>
+                </child>
+                <child>
+                  <object class="InstallProgress" id="Install_progress">
                   </object>
                 </child>
               </object>

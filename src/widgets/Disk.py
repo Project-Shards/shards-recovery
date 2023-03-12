@@ -19,14 +19,16 @@
 from gi.repository import Gtk, Adw, GdkPixbuf, Gdk, GLib
 
 @Gtk.Template(resource_path='/al/getcryst/shard/updater/widgets/Disk.ui')
-class Disk(Adw.Bin):
+class Disk(Gtk.ToggleButton):
     __gtype_name__ = "Disk"
 
     DiskType = Gtk.Template.Child()
     DiskName = Gtk.Template.Child()
     DiskSize = Gtk.Template.Child()
 
-    def __init__(self, diskname, disksize, disktype, **kwargs):
+    def __init__(self, diskname, disksize, disktype, group, **kwargs):
         super().__init__(**kwargs)
         self.DiskName.set_label(diskname)
         self.DiskSize.set_label(disksize)
+        if group is not None:
+            self.set_group(group)
