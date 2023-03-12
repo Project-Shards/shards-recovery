@@ -15,8 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # SPDX-License-Identifier: GPL-3.0
-
-from gi.repository import Gtk, Adw
+from gi.repository import Gtk, Adw, Vte, Pango, GLib
 from shard_updater.widgets.MenuButton import MenuButton
 from shard_updater.HeaderBar import HeaderBar
 
@@ -24,6 +23,8 @@ from shard_updater.HeaderBar import HeaderBar
 class RecoveryTerminalWindow(Adw.Bin):
     __gtype_name__ = 'RecoveryTerminalWindow'
 
+#    terminal_box = Gtk.Template.Child()
+    
     def __init__(
             self,
             window,
@@ -38,6 +39,26 @@ class RecoveryTerminalWindow(Adw.Bin):
         self.headerbar.remove_all_buttons()
         button = MenuButton(label="Quit Terminal", on_clicked=self.on_quit_button_clicked)
         self.headerbar.add_button(button)
+        self.command = command
+        self.vte_instance = Vte.Terminal()
+        self.vte_instance.set_cursor_blink_mode(Vte.CursorBlinkMode.ON)
+        self.vte_instance.set_font(Pango.FontDescription("Source Code Pro Regular 12"))
+        self.set_child(self.vte_instance)
+        self.vte_instance.connect("child-exited", self.on_quit_button_clicked)
 
+    def on_show(self):
+        self.vte_instance.spawn_async(
+            Vte.PtyFlags.DEFAULT,
+            ".", #cwd
+            self.command,
+            [], #envvars
+            GLib.SpawnFlags.DO_NOT_REAP_CHILD,
+            None,
+            None,
+            -1,
+            None,
+            None,
+        )
+        
     def on_quit_button_clicked(self, button):
         self.window.switch_to_main()
