@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.2"/>
+  <template class="UpgradeWindow" parent="AdwBin">
+        <style>
+      <class name="upgrade"/>
+    </style>
+    <property name="halign">fill</property>
+    <property name="vexpand">true</property>
+    <property name="hexpand">true</property>
+            <property name="valign">center</property>
+            <property name="margin-start">600</property>
+            <property name="margin-end">600</property>
+    <child>
+    <object class="AdwStatusPage">
+      <property name="margin-top">130</property>
+      <property name="margin-bottom">130</property>
+    <property name="valign">fill</property>
+    <property name="halign">fill</property>
+    <property name="hexpand">true</property>
+    <property name="vexpand">true</property>
+    <property name="title">Updating Project Shards</property>
+    <property name="description">This may take some time.</property>
+    <child>
+      <object class="GtkListBox">
+        <property name="margin-start">50</property>
+        <property name="margin-end">50</property>
+        <property name="valign">fill</property>
+        <property name="halign">fill</property>
+        <property name="hexpand">true</property>
+        <property name="vexpand">true</property>
+        <style>
+          <class name="boxed-list"/>
+        </style>
+        <child>
+          <object class="AdwExpanderRow">
+            <property name="title">Upgrade Root</property>
+            <property name="subtitle">Upgrades the root preloader system</property>
+            <property name="icon-name">test-pass</property>
+          </object>
+        </child>
+        <child>
+          <object class="AdwExpanderRow">
+            <property name="title">Upgrade System Shard</property>
+            <property name="subtitle">Upgrades the core packages</property>
+            <property name="icon-name">test-pass</property>
+          </object>
+        </child>
+        <child>
+          <object class="AdwExpanderRow">
+            <property name="title">Upgrade Desktop Shard</property>
+            <property name="subtitle">Upgrades packages used for the desktop</property>
+            <property name="icon-name">content-loading</property>
+            <child>
+              <object class="AdwActionRow">
+                <property name="title">Mount Desktop Shard</property>
+                <child>
+                  <object class="GtkImage" id="desktop_finish">
+                    <style>
+                      <class name="desktop_finish"/>
+                    </style>
+                    <property name="icon-name">test-pass</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="title">Create Snapshot</property>
+                <child>
+                  <object class="GtkSpinner">
+                    <property name="spinning">true</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="title">Upgrade Packages</property>
+                <child>
+                  <object class="GtkImage">
+                    <style>
+                      <class name="desktop_wait"/>
+                    </style>
+                    <property name="icon-name">content-loading-symbolic</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSpinner">
+                    <property name="visible">false</property>
+                    <property name="spinning">false</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwExpanderRow">
+            <property name="title">Upgrade Data Shard</property>
+            <property name="subtitle">Upgrades Packages installed by Users</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+  </child>
+  </template>
+</interface>

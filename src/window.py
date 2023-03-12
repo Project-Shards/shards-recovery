@@ -20,6 +20,7 @@
 from gi.repository import Adw, Gtk, Gdk
 import subprocess
 from shard_updater.windows.RecoveryTerminalWindow import RecoveryTerminalWindow
+from shard_updater.windows.UpgradeWindow import UpgradeWindow
 from shard_updater.windows.InstallWindow import InstallWindow
 from shard_updater.widgets.MenuButton import MenuButton
 from shard_updater.HeaderBar import HeaderBar
@@ -56,7 +57,7 @@ class ShardUpdaterWindow(Adw.ApplicationWindow):
         self.update_button.connect("activated", self.show_update_window)
         self.shard_shell_button.connect("activated", self.show_shard_terminal)
 
-        css=b"""
+        css="""
         .window {
             padding-left: 100px;
             padding-right: 100px;
@@ -82,17 +83,62 @@ class ShardUpdaterWindow(Adw.ApplicationWindow):
               0 1px 1px 1px alpha(black, 0.04),
               0 0 0 1px alpha(black, .05);
         }
+
+        .upgrade {
+            border-radius: 6px;
+            box-shadow: 0 1px 4px 1px alpha(black, 0.13),
+              0 1px 10px 5px alpha(black, 0.09),
+              0 3px 16px 8px alpha(black, 0.04),
+              0 0 0 1px alpha(black, .05);
+        }
+        .terminalWindow {
+            padding-left: 2px;
+            padding-right: 2px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            border-radius: 6px;
+            box-shadow: 0 1px 4px 1px alpha(black, 0.13),
+              0 1px 10px 5px alpha(black, 0.09),
+              0 3px 16px 8px alpha(black, 0.04),
+              0 0 0 1px alpha(black, .05);
+        }
+        .terminal {
+           border-radius: 6px;
+        }
         .rounded {
             border-radius: 10px;
         }
+        .desktop_finish {
+            /*
+            Replace "inherit" with your favorite color
+            */
+            color: #90ee90;
+        }
+
+        .desktop_wait {
+            color: #F6BE00;
+        }
+
         """
         provider = Gtk.CssProvider()
-        provider.load_from_data(data=css)
+        provider.load_from_data(css, -1)
         Gtk.StyleContext.add_provider_for_display(
             display=Gdk.Display.get_default(),
             provider=provider,
             priority=Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
         )
+        self.install_window=InstallWindow(self, self.header_bar)
+        self.shard_terminal=RecoveryTerminalWindow(self, self.header_bar, command=["/usr/share/shard-updater/shard-shell.sh"])
+        self.update_window=UpgradeWindow(self, self.header_bar)
+        self.recovery_terminal=RecoveryTerminalWindow(self, self.header_bar, command=["bash"])
+        self.install_window.set_visible(False)
+        self.shard_terminal.set_visible(False)
+        self.update_window.set_visible(False)
+        self.recovery_terminal.set_visible(False)
+        self.window_box.append(self.install_window)
+        self.window_box.append(self.shard_terminal)
+        self.window_box.append(self.update_window)
+        self.window_box.append(self.recovery_terminal)
 
     def open_gparted(self, widget):
         print("open gparted")
@@ -105,29 +151,28 @@ class ShardUpdaterWindow(Adw.ApplicationWindow):
     def show_install_window(self, widget):
         print("show install window")
         self.current_window.set_visible(False)
-        self.install_window=InstallWindow(self, self.header_bar)
-        self.window_box.append(self.install_window)
+        self.install_window.set_visible(True)
         self.current_window = self.install_window
 
     def show_shard_terminal(self, widget):
         print("show shard terminal")
         self.current_window.set_visible(False)
-        self.shard_terminal=RecoveryTerminalWindow(self, self.header_bar, command=["/usr/share/shard-updater/shard-shell.sh"])
-        self.window_box.append(self.shard_terminal)
+        self.shard_terminal.on_show()
+        self.shard_terminal.set_visible(True)
         self.current_window = self.shard_terminal
 
     def show_update_window(self, widget):
         print("show update window")
         self.current_window.set_visible(False)
-        self.update_window=RecoveryTerminalWindow(self, self.header_bar, command=["/usr/share/shard-updater/update.sh"])
-        self.window_box.append(self.update_window)
+        self.update_window.on_show()
+        self.update_window.set_visible(True)
         self.current_window = self.update_window
 
     def show_recovery_terminal(self, widget):
         print("show recovery terminal")
         self.current_window.set_visible(False)
-        self.recovery_terminal=RecoveryTerminalWindow(self, self.header_bar)
-        self.window_box.append(self.recovery_terminal)
+        self.recovery_terminal.on_show()
+        self.recovery_terminal.set_visible(True)
         self.current_window = self.recovery_terminal
 
     def close(self, widget):

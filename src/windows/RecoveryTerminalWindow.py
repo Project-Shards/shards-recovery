@@ -35,10 +35,8 @@ class RecoveryTerminalWindow(Adw.Bin):
         super().__init__(**kwargs)
         self.window = window
         self.headerbar = headerbar
-        self.headerbar.set_title("Recovery Terminal")
-        self.headerbar.remove_all_buttons()
-        button = MenuButton(label="Quit Terminal", on_clicked=self.on_quit_button_clicked)
-        self.headerbar.add_button(button)
+
+        self.button = MenuButton(label="Quit Terminal", on_clicked=self.on_quit_button_clicked)
         self.command = command
         self.vte_instance = Vte.Terminal()
         self.vte_instance.set_cursor_blink_mode(Vte.CursorBlinkMode.ON)
@@ -47,6 +45,10 @@ class RecoveryTerminalWindow(Adw.Bin):
         self.vte_instance.connect("child-exited", self.on_quit_button_clicked)
 
     def on_show(self):
+        self.headerbar.set_title("Recovery Terminal")
+        self.headerbar.remove_all_buttons()
+        self.headerbar.add_button(self.button)
+
         self.vte_instance.spawn_async(
             Vte.PtyFlags.DEFAULT,
             ".", #cwd

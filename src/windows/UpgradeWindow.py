@@ -1,4 +1,4 @@
-# InstallWindow.py
+# UpgraedWindow.py
 #
 # Copyright 2023 axtlos <axtlos@getcryst.al>
 #
@@ -16,34 +16,24 @@
 #
 # SPDX-License-Identifier: GPL-3.0
 
+
 from gi.repository import Gtk, Adw
-from shard_updater.windows.InstallWindows.DiskSelect import DiskSelect
-from shard_updater.windows.InstallWindows.InstallProgress import InstallProgress
 from shard_updater.widgets.MenuButton import MenuButton
 
-@Gtk.Template(resource_path='/al/getcryst/shard/updater/windows/InstallWindow.ui')
-class InstallWindow(Adw.Bin):
-    __gtype_name__ = 'InstallWindow'
-
-    Disk_select = Gtk.Template.Child()
-    Install_progress = Gtk.Template.Child()
-    carousel = Gtk.Template.Child()
+@Gtk.Template(resource_path='/al/getcryst/shard/updater/windows/UpgradeWindow.ui')
+class UpgradeWindow(Adw.Bin):
+    __gtype_name__ = 'UpgradeWindow'
 
     def __init__(self, window, headerbar, **kwargs):
         super().__init__(**kwargs)
         self.window = window
         self.headerbar = headerbar
-        self.button = MenuButton(label="Quit Installer", on_clicked=self.on_quit_button_clicked)
-        self.Disk_select.continue_button.connect("clicked", self.on_disk_select_next_clicked)
+        self.button = MenuButton(label="Cancel Update", on_clicked=self.on_quit_button_clicked)
 
     def on_show(self):
-        self.headerbar.set_title("Install Project Shards")
+        self.headerbar.set_title("Project Shards Updater")
         self.headerbar.remove_all_buttons()
         self.headerbar.add_button(self.button)
 
-    def on_quit_button_clicked(self, button):
+    def on_quit_button_clicked(self, widget):
         self.window.switch_to_main()
-
-    def on_disk_select_next_clicked(self, button):
-        self.carousel.scroll_to(self.Install_progress, True)
-        self.headerbar.remove_all_buttons()
