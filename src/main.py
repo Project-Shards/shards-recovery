@@ -53,10 +53,10 @@ class Shard_updaterApplication(Adw.Application):
         about = Adw.AboutWindow(transient_for=self.props.active_window,
                                 application_name='shard_updater',
                                 application_icon='al.getcryst.shard.updater',
-                                developer_name='Unknown',
+                                developer_name='axtlos',
                                 version='0.1.0',
-                                developers=['Unknown'],
-                                copyright='© 2023 Unknown')
+                                developers=['axtlos'],
+                                copyright='© 2023 axtlos')
         about.present()
 
     def on_preferences_action(self, widget, _):

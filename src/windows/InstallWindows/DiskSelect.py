@@ -1,4 +1,4 @@
-# HeaderBar.py
+# DiskSelect.py
 #
 # Copyright 2023 axtlos <axtlos@getcryst.al>
 #
@@ -16,32 +16,20 @@
 #
 # SPDX-License-Identifier: GPL-3.0
 
-from gi.repository import Adw, Gtk
+from gi.repository import Gtk, Adw
+from shard_updater.widgets.Disk import Disk
 
-@Gtk.Template(resource_path='/al/getcryst/shard/updater/HeaderBar.ui')
-class HeaderBar(Gtk.Box):
-    __gtype_name__ = "HeaderBar"
+@Gtk.Template(resource_path='/al/getcryst/shard/updater/windows/InstallWindows/DiskSelect.ui')
+class DiskSelect(Gtk.Box):
+    __gtype_name__ = 'DiskSelect'
 
-    title_text = Gtk.Template.Child()
-    header_buttons = []
+    disk_list = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def set_window(self, window):
-        self.window = window
+        testDisk = Disk(diskname="/dev/sda", disksize="10bb (bottombytes)", disktype="SSD")
+        testDisk2 = Disk(diskname="/dev/sdb", disksize="100bb (bottombytes)", disktype="SSD")
 
-    def set_title(self, title):
-        self.title_text.set_title(title)
-
-    def add_button(self, button):
-        print(button.label)
-        self.header_buttons.append(button)
-        self.append(button)
-        print(self.header_buttons)
-
-    def remove_all_buttons(self):
-        for button in self.header_buttons:
-            print("Remove "+button.label)
-            self.remove(button)
-        self.header_buttons = []
+        self.disk_list.append(testDisk)
+        self.disk_list.append(testDisk2)

@@ -26,6 +26,11 @@
             <property name="valign">fill</property>
             <property name="hexpand">true</property>
             <property name="vexpand">true</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="label">Imagine a terminal here</property>
+              </object>
+            </child>
           </object>
         </child>
       </object>

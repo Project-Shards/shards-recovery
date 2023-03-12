@@ -23,104 +23,127 @@
             <property name="decoration-layout"></property>
           </object>
         </child>
-    <child>
-      <object class="AdwBin" id="main_window">
-        <style>
-          <class name="window"/>
-        </style>
-        <property name="halign">center</property>
-        <property name="valign">center</property>
-        <property name="margin-start">100</property>
-        <property name="margin-top">200</property>
-        <property name="margin-end">100</property>
-        <property name="margin-bottom">200</property>
         <child>
-      <object class="GtkBox">
-        <property name="orientation">vertical</property>
-        <property name="homogeneous">true</property>
-        <property name="valign">center</property>
-        <property name="halign">center</property>
-        <child>
-          <object class="GtkListBox">
-            <property name="margin-bottom">12</property>
-            <child>
-              <object class="AdwActionRow" id="update_button">
-                <property name="icon-name">software-update-available-symbolic</property>
-                <property name="title">Update Shard Linux</property>
-                <property name="subtitle">Update all packages installed</property>
-              </object>
-            </child>
+          <object class="AdwBin" id="main_window">
             <style>
-              <class name="boxed-list"/>
+              <class name="window"/>
             </style>
-          </object>
-        </child>
-        <child>
-          <object class="GtkListBox">
-              <property name="margin-bottom">12</property>
-            <child>
-              <object class="AdwActionRow" id="reinstall_button">
-                <property name="icon-name">folder-download-symbolic</property>
-                <property name="title">Reinstall Shard Linux</property>
-                <property name="subtitle">Reinstalls a new copy of Shard Linux</property>
-              </object>
-            </child>
-            <style>
-              <class name="boxed-list"/>
-            </style>
-          </object>
-        </child>
-        <child>
-          <object class="GtkListBox">
-            <property name="margin-bottom">12</property>
-            <child>
-              <object class="AdwActionRow" id="browser_button">
-                <property name="icon-name">web-browser-symbolic</property>
-                <property name="title">Open a web browser</property>
-                <property name="subtitle">Open firefox/epiphany to get support online</property>
-              </object>
-            </child>
-            <style>
-              <class name="boxed-list"/>
-            </style>
-          </object>
-        </child>
-        <child>
-          <object class="GtkListBox">
-            <property name="margin-bottom">12</property>
-            <child>
-              <object class="AdwActionRow" id="recovery_button">
-                <property name="icon-name">utilities-terminal-symbolic</property>
-                <property name="title">Open a Recovery shell</property>
-                <property name="subtitle">Opens a terminal with a root shell of this recovery</property>
-              </object>
-            </child>
-            <style>
-              <class name="boxed-list"/>
-            </style>
-          </object>
-        </child>
-        <child>
-          <object class="GtkListBox">
-            <property name="margin-bottom">0</property>
+            <property name="halign">center</property>
             <property name="valign">center</property>
+            <property name="margin-start">100</property>
+            <property name="margin-top">200</property>
+            <property name="margin-end">100</property>
+            <property name="margin-bottom">200</property>
             <child>
-              <object class="AdwActionRow" id="shard_shell_button">
-                <property name="icon-name">utilities-terminal-symbolic</property>
-                <property name="title">Open a Shard Linux shell</property>
-                <property name="subtitle">Opens a terminal with a root shell inside of your Shard Linux installation</property>
+              <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <property name="homogeneous">true</property>
+                <property name="valign">center</property>
+                <property name="halign">center</property>
+                <child>
+                  <object class="GtkListBox">
+                    <property name="margin-bottom">12</property>
+                    <child>
+                      <object class="AdwActionRow" id="update_button">
+                        <property name="icon-name">software-update-available-symbolic</property>
+                        <property name="title">Update Shard Linux</property>
+                        <property name="subtitle">Update all packages installed</property>
+                        <property name="activatable-widget">
+                          <object class="GtkButton">
+                            <property name="label"> </property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <style>
+                      <class name="boxed-list"/>
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkListBox">
+                    <property name="margin-bottom">12</property>
+                    <child>
+                      <object class="AdwActionRow" id="reinstall_button">
+                        <property name="icon-name">folder-download-symbolic</property>
+                        <property name="title">Reinstall Shard Linux</property>
+                        <property name="subtitle">Reinstalls a new copy of Shard Linux</property>
+                        <property name="activatable-widget">
+                          <object class="GtkButton">
+                            <property name="label"> </property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <style>
+                      <class name="boxed-list"/>
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkListBox">
+                    <property name="margin-bottom">12</property>
+                    <child>
+                      <object class="AdwActionRow" id="browser_button">
+                        <property name="icon-name">web-browser-symbolic</property>
+                        <property name="title">Open a web browser</property>
+                        <property name="subtitle">Open firefox/epiphany to get support online</property>
+                        <property name="activatable-widget">
+                          <object class="GtkButton">
+                            <property name="label"> </property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <style>
+                      <class name="boxed-list"/>
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkListBox">
+                    <property name="margin-bottom">12</property>
+                    <child>
+                      <object class="AdwActionRow" id="recovery_button">
+                        <property name="icon-name">utilities-terminal-symbolic</property>
+                        <property name="title">Open a Recovery shell</property>
+                        <property name="subtitle">Opens a terminal with a root shell of this recovery</property>
+                        <property name="activatable-widget">
+                          <object class="GtkButton">
+                            <property name="label"> </property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <style>
+                      <class name="boxed-list"/>
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkListBox">
+                    <child>
+                      <object class="AdwActionRow" id="shard_shell_button">
+                        <property name="icon-name">utilities-terminal-symbolic</property>
+                        <property name="title">Open a Shard Linux shell</property>
+                        <property name="subtitle">Opens a terminal with a root shell inside of your Shard Linux installation</property>
+                        <property name="activatable-widget">
+                          <object class="GtkButton">
+                            <property name="label"> </property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <style>
+                      <class name="boxed-list"/>
+                    </style>
+                  </object>
+                </child>
               </object>
             </child>
-            <style>
-              <class name="boxed-list"/>
-            </style>
           </object>
         </child>
       </object>
-    </child>
-        </object>
-      </child>
-  </object>
     </child>
   </template>
 </interface>

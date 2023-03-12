@@ -19,6 +19,7 @@
 
 from gi.repository import Adw, Gtk, Gdk
 from shard_updater.windows.RecoveryTerminalWindow import RecoveryTerminalWindow
+from shard_updater.windows.InstallWindow import InstallWindow
 from shard_updater.widgets.MenuButton import MenuButton
 from shard_updater.HeaderBar import HeaderBar
 
@@ -41,9 +42,13 @@ class ShardUpdaterWindow(Adw.ApplicationWindow):
         self.fullscreen()
 #        self.header_bar = HeaderBar(self)
         print(self.header_bar)
-        self.header_bar.set_title(" Recovery")
-        self.menu_button = MenuButton("do thing", self.pressed)
+        self.header_bar.set_window(self)
+        self.header_bar.set_title("Project Shards Recovery")
+        self.menu_button = MenuButton("Quit", self.close)
         self.header_bar.add_button(self.menu_button)
+        self.current_window = self.main_window
+        self.recovery_button.connect("activated", self.show_recovery_terminal)
+        self.reinstall_button.connect("activated", self.show_install_window)
 
         css=b"""
         .window {
@@ -69,18 +74,28 @@ class ShardUpdaterWindow(Adw.ApplicationWindow):
             priority=Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
         )
 
-        self.main_window.set_visible(False)
+    def show_install_window(self, widget):
+        print("show install window")
+        self.current_window.set_visible(False)
+        self.install_window=InstallWindow(self, self.header_bar)
+        self.window_box.append(self.install_window)
+        self.current_window = self.install_window
+
+    def show_recovery_terminal(self, widget):
+        print("show recovery terminal")
+        self.current_window.set_visible(False)
         self.recovery_terminal=RecoveryTerminalWindow(self, self.header_bar)
         self.window_box.append(self.recovery_terminal)
         self.current_window = self.recovery_terminal
 
-    def pressed(self, widget):
-        print("pressed")
+    def close(self, widget):
+        print("close")
+        self.destroy()
 
     def switch_to_main(self):
         self.main_window.set_visible(True)
         self.current_window.set_visible(False)
         self.current_window = self.main_window
-        self.header_bar.set_title(" Recovery")
+        self.header_bar.set_title("Project Shards Recovery")
         self.header_bar.remove_all_buttons()
         self.header_bar.add_button(self.menu_button)

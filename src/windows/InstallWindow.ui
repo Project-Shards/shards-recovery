@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.2"/>
+  <template class="InstallWindow" parent="AdwBin">
+    <style>
+              <class name="window"/>
+            </style>
+            <property name="halign">center</property>
+            <property name="valign">fill</property>
+            <property name="margin-top">100</property>
+            <property name="margin-bottom">100</property>
+
+                <property name="vexpand">true</property>
+                <property name="hexpand">true</property>
+            <child>
+              <object class="AdwCarousel" id="carousel">
+                <property name="orientation">horizontal</property>
+                <property name="vexpand">true</property>
+                <property name="hexpand">true</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
+                <property name="allow-mouse-drag">false</property>
+                <property name="allow-scroll-wheel">false</property>
+                <property name="allow-long-swipes">false</property>
+                <property name="interactive">false</property>
+                <child>
+                  <object class="DiskSelect" id="Disk_select">
+                  </object>
+                </child>
+              </object>
+            </child>
+  </template>
+</interface>
