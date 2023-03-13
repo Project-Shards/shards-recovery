@@ -108,14 +108,11 @@ class ShardUpdaterWindow(Adw.ApplicationWindow):
         .rounded {
             border-radius: 10px;
         }
-        .desktop_finish {
-            /*
-            Replace "inherit" with your favorite color
-            */
+        .update_finish {
             color: #90ee90;
         }
 
-        .desktop_wait {
+        .update_wait {
             color: #F6BE00;
         }
 

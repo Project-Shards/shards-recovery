@@ -35,3 +35,4 @@ shard_updater_sources = [
 install_data(shard_updater_sources, install_dir: moduledir)
 subdir('windows')
 subdir('widgets')
+subdir('utils')
