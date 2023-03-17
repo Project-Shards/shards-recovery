@@ -10,3 +10,4 @@ shard_updater_sources = [
 install_data(shard_updater_sources, install_dir: windowsdir)
 
 subdir('InstallWindows')
+subdir('UpgradeWindows')

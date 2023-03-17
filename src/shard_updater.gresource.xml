@@ -11,10 +11,19 @@
     <file preprocess="xml-stripblanks">windows/InstallWindows/DiskSelect.ui</file>
     <file preprocess="xml-stripblanks">windows/InstallWindows/InstallProgress.ui</file>
     <file preprocess="xml-stripblanks">windows/UpgradeWindow.ui</file>
+    <file preprocess="xml-stripblanks">windows/UpgradeWindows/Upgrade.ui</file>
+    <file preprocess="xml-stripblanks">windows/UpgradeWindows/UpgradeFail.ui</file>
+    <file preprocess="xml-stripblanks">windows/UpgradeWindows/UpgradeFinish.ui</file>
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
   </gresource>
   <gresource prefix="/al/getcryst/shard/updater/icons/scalable/actions">
     <file preprocess="xml-stripblanks" alias="org.gnome.DiskUtility-symbolic.svg">../data/icons/org.gnome.DiskUtility-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="test-pass-symbolic.svg">../data/icons/test-pass-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="shardtop.svg">../data/icons/glowing-animation/shardtop.svg</file>
+    <file preprocess="xml-stripblanks" alias="shardleft.svg">../data/icons/glowing-animation/shardleft.svg</file>
+    <file preprocess="xml-stripblanks" alias="shardright.svg">../data/icons/glowing-animation/shardright.svg</file>
+    <file preprocess="xml-stripblanks" alias="shardbottom.svg">../data/icons/glowing-animation/shardbottom.svg</file>
+    <file preprocess="xml-stripblanks" alias="shardfull.svg">../data/icons/glowing-animation/shardfull.svg</file>
+    <file preprocess="xml-stripblanks" alias="shardempty.svg">../data/icons/glowing-animation/shardempty.svg</file>
   </gresource>
 </gresources>

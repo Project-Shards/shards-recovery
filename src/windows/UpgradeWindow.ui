@@ -2,7 +2,7 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <requires lib="Adw" version="1.2"/>
-  <template class="UpgradeWindow" parent="AdwBin">
+  <template class="UpgradeWindow" parent="GtkStack">
     <style>
       <class name="upgrade"/>
     </style>
@@ -12,115 +12,16 @@
     <property name="valign">center</property>
     <property name="margin-start">600</property>
     <property name="margin-end">600</property>
+    <property name="transition-type">slide-left</property>
+    <property name="visible-child">upgrade</property>
     <child>
-      <object class="AdwStatusPage">
-        <property name="valign">fill</property>
-        <property name="halign">fill</property>
-        <property name="hexpand">true</property>
-        <property name="vexpand">true</property>
-        <property name="title">Updating Project Shards</property>
-        <property name="description">This may take some time.</property>
-        <child>
-          <object class="GtkListBox">
-            <property name="margin-start">50</property>
-            <property name="margin-end">50</property>
-            <property name="valign">fill</property>
-            <property name="halign">fill</property>
-            <property name="hexpand">true</property>
-            <property name="vexpand">true</property>
-            <style>
-              <class name="boxed-list"/>
-            </style>
-            <child>
-              <object class="AdwExpanderRow" id="root">
-                <property name="title">Upgrade Root</property>
-                <property name="subtitle">Upgrades the root preloader system</property>
-                <property name="icon-name">content-loading</property>
-                <child>
-                  <object class="UpdateStep" id="mount_root">
-                    <property name="title">Mount Root</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="UpdateStep" id="snapshot_root">
-                    <property name="title">Snapshot Root</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="UpdateStep" id="update_root">
-                    <property name="title">Update Root</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwExpanderRow" id="system">
-                <property name="title">Upgrade System Shard</property>
-                <property name="subtitle">Upgrades the core packages</property>
-                <property name="icon-name">content-loading</property>
-                <child>
-                  <object class="UpdateStep" id="mount_system">
-                    <property name="title">Mount System</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="UpdateStep" id="snapshot_system">
-                    <property name="title">Snapshot System</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="UpdateStep" id="update_system">
-                    <property name="title">Update System</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwExpanderRow" id="desktop">
-                <property name="title">Upgrade Desktop Shard</property>
-                <property name="subtitle">Upgrades packages used for the desktop</property>
-                <property name="icon-name">content-loading</property>
-                <child>
-                  <object class="UpdateStep" id="mount_desktop">
-                    <property name="title">Mount Desktop</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="UpdateStep" id="snapshot_desktop">
-                    <property name="title">Snapshot Desktop</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="UpdateStep" id="update_desktop">
-                    <property name="title">Update Desktop</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwExpanderRow" id="data">
-                <property name="title">Upgrade Data Shard</property>
-                <property name="subtitle">Upgrades Packages installed by Users</property>
-                <child>
-                  <object class="UpdateStep" id="mount_data">
-                    <property name="title">Mount Data</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="UpdateStep" id="snapshot_data">
-                    <property name="title">Snapshot Data</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="UpdateStep" id="update_data">
-                    <property name="title">Update Data</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-          </object>
-        </child>
-      </object>
+      <object class="Upgrade" id="upgrade"/>
+    </child>
+    <child>
+      <object class="UpgradeFinish" id="upgradefinish"/>
+    </child>
+    <child>
+      <object class="UpgradeFail" id="upgradefail"/>
     </child>
   </template>
 </interface>
