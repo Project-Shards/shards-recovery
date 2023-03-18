@@ -18,6 +18,7 @@
 
 from gi.repository import Gtk, Adw, GLib, GdkPixbuf, Gdk
 import time
+import subprocess
 from shard_updater.widgets.MenuButton import MenuButton
 from shard_updater.widgets.UpdateStep import UpdateStep
 from shard_updater.utils.threading import RunAsync
@@ -43,6 +44,7 @@ class Upgrade(Adw.Bin):
     snapshot_data = Gtk.Template.Child()
     update_data = Gtk.Template.Child()
     statuspage = Gtk.Template.Child()
+    upgrade_failed = False
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -50,139 +52,262 @@ class Upgrade(Adw.Bin):
     def set_window(self, window):
         self.window = window
 
-
-
     def set_icon(self, icon: str):
         self.statuspage.set_icon_name(icon)
 
+    def check_fail(self):
+        if self.upgrade_failed:
+            self.window.upgrade_finished(False)
+
+    def write_to_log(self, output: str):
+        with open('/tmp/shardsrecovery.log', 'a') as log:
+            log.write(output)
+
     def root_step(self):
 
-        def root_mount_start(self, finished: bool):
-            GLib.idle_add(self.mount_root.set_spinner, not finished)
-            if finished:
-                GLib.idle_add(self.mount_root.set_icon_status, finished)
+        def root_mount_start(self):
+            if self.upgrade_failed:
+                return
+            GLib.idle_add(self.mount_root.set_spinner, True)
+            out = subprocess.run(
+                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/root/mount.sh"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT
+            )
+            self.write_to_log(out.stdout.decode("utf-8"))
+            if out.returncode == 0:
+                GLib.idle_add(self.mount_root.set_icon_status, True)
+            else:
+                self.upgrade_failed=True
 
-        def root_snapshot_start(self, finished: bool):
-            GLib.idle_add(self.snapshot_root.set_spinner, not finished)
-            if finished:
-                GLib.idle_add(self.snapshot_root.set_icon_status, finished)
+        def root_snapshot_start(self):
+            if self.upgrade_failed:
+                return
+            GLib.idle_add(self.snapshot_root.set_spinner, True)
+            out = subprocess.run(
+                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/root/snapshot.sh"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT
+            )
+            self.write_to_log(out.stdout.decode("utf-8"))
+            if out.returncode == 0:
+                GLib.idle_add(self.snapshot_root.set_icon_status, True)
+            else:
+                self.upgrade_failed=True
 
-        def root_update_start(self, finished: bool):
-            GLib.idle_add(self.update_root.set_spinner, not finished)
-            if finished:
-                GLib.idle_add(self.update_root.set_icon_status, finished)
+        def root_update_start(self):
+            if self.upgrade_failed:
+                return
+            GLib.idle_add(self.update_root.set_spinner, True)
+            out = subprocess.run(
+                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/root/update.sh"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT
+            )
+            self.write_to_log(out.stdout.decode("utf-8"))
+            if out.returncode == 0:
+                GLib.idle_add(self.update_root.set_icon_status, True)
+            else:
+                self.upgrade_failed=True
+
 
         def on_root_finish(self):
+            if self.upgrade_failed:
+                return
             GLib.idle_add(self.root.set_icon_name, "test-pass")
             GLib.idle_add(self.root.set_expanded, False)
             self.system_step()
 
         GLib.idle_add(self.root.set_expanded, True)
         GLib.idle_add(self.set_icon, "shardbottom")
-        time.sleep(1)
-        root_mount_start(self, finished=False)
-        time.sleep(0.5)
-        root_mount_start(self, finished=True)
-        root_snapshot_start(self, finished=False)
-        time.sleep(0.5)
-        root_snapshot_start(self, finished=True)
-        root_update_start(self, finished=False)
-        time.sleep(0.5)
-        root_update_start(self, finished=True)
+        root_mount_start(self)
+        GLib.idle_add(self.check_fail)
+        root_snapshot_start(self)
+        GLib.idle_add(self.check_fail)
+        root_update_start(self)
+        GLib.idle_add(self.check_fail)
         on_root_finish(self)
 
 
     def system_step(self):
 
-        def system_mount_start(self, finished: bool):
-            GLib.idle_add(self.mount_system.set_spinner, not finished)
-            if finished:
-                GLib.idle_add(self.mount_system.set_icon_status, finished)
+        def system_mount_start(self):
+            if self.upgrade_failed:
+                return
+            GLib.idle_add(self.mount_system.set_spinner, True)
+            out = subprocess.run(
+                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/system/mount.sh"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT
+            )
+            self.write_to_log(out.stdout.decode("utf-8"))
+            if out.returncode == 0:
+                GLib.idle_add(self.mount_system.set_icon_status, True)
+            else:
+                self.upgrade_failed=True
 
-        def system_snapshot_start(self, finished: bool):
-            GLib.idle_add(self.snapshot_system.set_spinner, not finished)
-            if finished:
-                GLib.idle_add(self.snapshot_system.set_icon_status, finished)
+        def system_snapshot_start(self):
+            if self.upgrade_failed:
+                return
+            GLib.idle_add(self.snapshot_system.set_spinner, True)
+            out = subprocess.run(
+                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/system/snapshot.sh"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT
+            )
+            self.write_to_log(out.stdout.decode("utf-8"))
+            if out.returncode == 0:
+                GLib.idle_add(self.snapshot_system.set_icon_status, True)
+            else:
+                self.upgrade_failed=True
 
-        def system_update_start(self, finished: bool):
-            GLib.idle_add(self.update_system.set_spinner, not finished)
-            if finished:
-                GLib.idle_add(self.update_system.set_icon_status, finished)
+        def system_update_start(self):
+            if self.upgrade_failed:
+                return
+            GLib.idle_add(self.update_system.set_spinner, True)
+            out = subprocess.run(
+                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/system/update.sh"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT
+            )
+            self.write_to_log(out.stdout.decode("utf-8"))
+            if out.returncode == 0:
+                GLib.idle_add(self.update_system.set_icon_status, True)
+            else:
+                self.upgrade_failed=True
 
         def on_system_finish(self):
+            if self.upgrade_failed:
+                return
             GLib.idle_add(self.system.set_icon_name, "test-pass")
             GLib.idle_add(self.system.set_expanded, False)
             self.desktop_step()
 
         GLib.idle_add(self.system.set_expanded, True)
         GLib.idle_add(self.set_icon, "shardleft")
-        time.sleep(1)
-        system_mount_start(self, finished=False)
-        time.sleep(0.5)
-        system_mount_start(self, finished=True)
-        system_snapshot_start(self, finished=False)
-        time.sleep(0.5)
-        system_snapshot_start(self, finished=True)
-        system_update_start(self, finished=False)
-        time.sleep(0.5)
-        system_update_start(self, finished=True)
+        system_mount_start(self)
+        GLib.idle_add(self.check_fail)
+        system_snapshot_start(self)
+        GLib.idle_add(self.check_fail)
+        system_update_start(self)
+        GLib.idle_add(self.check_fail)
         on_system_finish(self)
 
     def desktop_step(self):
 
-        def desktop_mount_start(self, finished: bool):
-            GLib.idle_add(self.mount_desktop.set_spinner, not finished)
-            if finished:
-                GLib.idle_add(self.mount_desktop.set_icon_status, finished)
+        def desktop_mount_start(self):
+            if self.upgrade_failed:
+                return
+            GLib.idle_add(self.mount_desktop.set_spinner, True)
+            out = subprocess.run(
+                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/desktop/mount.sh"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT
+            )
+            self.write_to_log(out.stdout.decode("utf-8"))
+            if out.returncode == 0:
+                GLib.idle_add(self.mount_desktop.set_icon_status, True)
+            else:
+                self.upgrade_failed=True
 
-        def desktop_snapshot_start(self, finished: bool):
-            GLib.idle_add(self.snapshot_desktop.set_spinner, not finished)
-            if finished:
-                GLib.idle_add(self.snapshot_desktop.set_icon_status, finished)
+        def desktop_snapshot_start(self):
+            if self.upgrade_failed:
+                return
+            GLib.idle_add(self.snapshot_desktop.set_spinner, True)
+            out = subprocess.run(
+                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/desktop/snapshot.sh"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT
+            )
+            if out.returncode == 0:
+                GLib.idle_add(self.snapshot_desktop.set_icon_status, True)
+            else:
+                self.upgrade_failed=True
 
-        def desktop_update_start(self, finished: bool):
-            GLib.idle_add(self.update_desktop.set_spinner, not finished)
-            if finished:
-                GLib.idle_add(self.update_desktop.set_icon_status, finished)
+        def desktop_update_start(self):
+            if self.upgrade_failed:
+                return
+            GLib.idle_add(self.update_desktop.set_spinner, True)
+            out = subprocess.run(
+                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/desktop/update.sh"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT
+            )
+            self.write_to_log(out.stdout.decode("utf-8"))
+            if out.returncode == 0:
+                GLib.idle_add(self.update_desktop.set_icon_status, True)
+            else:
+                self.upgrade_failed=True
 
         def on_desktop_finish(self):
+            if self.upgrade_failed:
+                return
             GLib.idle_add(self.desktop.set_icon_name, "test-pass")
             GLib.idle_add(self.desktop.set_expanded, False)
             self.data_step()
 
         GLib.idle_add(self.desktop.set_expanded, True)
         GLib.idle_add(self.set_icon, "shardright")
-        time.sleep(1)
-        desktop_mount_start(self, finished=False)
-        time.sleep(0.5)
-        desktop_mount_start(self, finished=True)
-        desktop_snapshot_start(self, finished=False)
-        time.sleep(0.5)
-        desktop_snapshot_start(self, finished=True)
-        desktop_update_start(self, finished=False)
-        time.sleep(0.5)
-        desktop_update_start(self, finished=True)
+        desktop_mount_start(self)
+        GLib.idle_add(self.check_fail)
+        desktop_snapshot_start(self)
+        GLib.idle_add(self.check_fail)
+        desktop_update_start(self)
+        GLib.idle_add(self.check_fail)
         on_desktop_finish(self)
 
 
     def data_step(self):
 
-        def data_mount_start(self, finished: bool):
-            GLib.idle_add(self.mount_data.set_spinner, not finished)
-            if finished:
-                GLib.idle_add(self.mount_data.set_icon_status, finished)
+        def data_mount_start(self):
+            if self.upgrade_failed:
+                return
+            GLib.idle_add(self.mount_data.set_spinner, True)
+            out = subprocess.run(
+                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/data/mount.sh"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT
+            )
+            self.write_to_log(out.stdout.decode("utf-8"))
+            if out.returncode == 0:
+                GLib.idle_add(self.mount_data.set_icon_status, True)
+            else:
+                self.upgrade_failed=True
 
-        def data_snapshot_start(self, finished: bool):
-            GLib.idle_add(self.snapshot_data.set_spinner, not finished)
-            if finished:
-                GLib.idle_add(self.snapshot_data.set_icon_status, finished)
+        def data_snapshot_start(self):
+            if self.upgrade_failed:
+                return
+            GLib.idle_add(self.snapshot_data.set_spinner, True)
+            out = subprocess.run(
+                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/data/snapshot.sh"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT
+            )
+            self.write_to_log(out.stdout.decode("utf-8"))
+            if out.returncode == 0:
+                GLib.idle_add(self.snapshot_data.set_icon_status, True)
+            else:
+                self.upgrade_failed=True
 
-        def data_update_start(self, finished: bool):
-            GLib.idle_add(self.update_data.set_spinner, not finished)
-            if finished:
-                GLib.idle_add(self.update_data.set_icon_status, finished)
+
+        def data_update_start(self):
+            if self.upgrade_failed:
+                return
+            GLib.idle_add(self.update_data.set_spinner, True)
+            out = subprocess.run(
+                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/data/update.sh"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT
+            )
+            self.write_to_log(out.stdout.decode("utf-8"))
+            if out.returncode == 0:
+                GLib.idle_add(self.update_data.set_icon_status, True)
+            else:
+                self.upgrade_failed=True
 
         def on_data_finish(self):
+            if self.upgrade_failed:
+                return
             GLib.idle_add(self.data.set_icon_name, "test-pass")
             GLib.idle_add(self.data.set_expanded, False)
             GLib.idle_add(self.set_icon, "shardfull")
@@ -191,13 +316,10 @@ class Upgrade(Adw.Bin):
         GLib.idle_add(self.data.set_expanded, True)
         GLib.idle_add(self.set_icon, "shardtop")
         time.sleep(1)
-        data_mount_start(self, finished=False)
-        time.sleep(0.5)
-        data_mount_start(self, finished=True)
-        data_snapshot_start(self, finished=False)
-        time.sleep(0.5)
-        data_snapshot_start(self, finished=True)
-        data_update_start(self, finished=False)
-        time.sleep(0.5)
-        data_update_start(self, finished=True)
+        data_mount_start(self)
+        GLib.idle_add(self.check_fail)
+        data_snapshot_start(self)
+        GLib.idle_add(self.check_fail)
+        data_update_start(self)
+        GLib.idle_add(self.check_fail)
         on_data_finish(self)

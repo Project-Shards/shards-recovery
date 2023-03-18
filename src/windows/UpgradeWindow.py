@@ -32,12 +32,12 @@ class UpgradeWindow(Gtk.Stack):
     upgrade = Gtk.Template.Child()
     upgradefinish = Gtk.Template.Child()
     upgradefail = Gtk.Template.Child()
+    update_started = False
 
     def __init__(self, window, headerbar, **kwargs):
         super().__init__(**kwargs)
         self.window = window
         self.headerbar = headerbar
-        self.button = MenuButton(label="Cancel Update", on_clicked=self.on_quit_button_clicked)
         self.upgrade.set_window(self)
 
 
@@ -52,8 +52,6 @@ class UpgradeWindow(Gtk.Stack):
     def on_show(self):
         self.headerbar.set_title("Project Shards Updater")
         self.headerbar.remove_all_buttons()
-        self.headerbar.add_button(self.button)
-        RunAsync(self.upgrade.root_step)
-
-    def on_quit_button_clicked(self, widget):
-        self.window.switch_to_main()
+        if not self.update_started:
+            RunAsync(self.upgrade.root_step)
+            self.update_started=True
