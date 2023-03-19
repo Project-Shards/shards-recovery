@@ -19,7 +19,7 @@ echo "-- Creating bind mount from /Shards/Users to /home --"
 mount --bind /mnt/Shards/Users /mnt/home
 
 echo "-- Mounting EFI partition --"
-mount /dev/disk/by-label/EFI /mnt/boot/efi
+mount /dev/disk/by-label/SHARDSEFI /mnt/boot/efi
 
 echo "-- Installing Desktop Shard --"
 pacstrap -K /mnt xorg gnome sushi pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-nerd-fonts-symbols-common power-profiles-deamon cups cups-pdf

@@ -9,5 +9,5 @@ if [ -z "$DISK" ]; then
 fi
 
 
-mkfs.vfat -F 32 -n "BOOT" ${DISK}1
+mkfs.vfat -F 32 -n "SHARDSEFI" ${DISK}1
 mkfs.btrfs -f -L "SHARDS" ${DISK}2
