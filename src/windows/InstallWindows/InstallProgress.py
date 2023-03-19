@@ -76,7 +76,7 @@ class InstallProgress(Gtk.Box):
         self.progress_bar.set_text("Partitioning disk")
         self.progress_bar.set_fraction(0)
         out = subprocess.run(
-            [self.scriptdir+"/partition/partition.sh", self.selected_disk],
+            ["pkexec", self.scriptdir+"/partition/partition.sh", self.selected_disk],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT
         )

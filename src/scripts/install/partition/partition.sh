@@ -16,5 +16,5 @@ fi
 
 
 parted -s $DISK mklabel gpt
-parted -S $DISK mkpart fat32 1MiB 512MiB
-parted -S $DISK mkpart btrfs 512MiB 100%
+parted -s $DISK mkpart fat32 1MiB 512MiB
+parted -s $DISK mkpart btrfs 512MiB 100%
