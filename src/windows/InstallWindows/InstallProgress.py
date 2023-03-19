@@ -84,7 +84,7 @@ class InstallProgress(Gtk.Box):
         if self.stop_install:
             return
         out = subprocess.run(
-            [self.scriptdir+"partition/"+("nvme" if "nvme" in self.selected_disk else "block")+".sh", self.selected_disk],
+            ["pkexec", self.scriptdir+"partition/"+("nvme" if "nvme" in self.selected_disk else "block")+".sh", self.selected_disk],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT
         )
@@ -92,7 +92,7 @@ class InstallProgress(Gtk.Box):
         if self.stop_install:
             return
         out = subprocess.run(
-            [self.scriptdir+"/partition/shards.sh"],
+            ["pkexec", self.scriptdir+"/partition/shards.sh"],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT
         )
@@ -102,7 +102,7 @@ class InstallProgress(Gtk.Box):
         self.progressbar_cubic_ease(0.14)
         self.progress_bar.set_text("Installing Recovery")
         out = subprocess.run(
-            [self.scriptdir+"/recovery.sh"],
+            ["pkexec", self.scriptdir+"/recovery.sh"],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT
         )
@@ -112,7 +112,7 @@ class InstallProgress(Gtk.Box):
         self.progressbar_cubic_ease(0.28)
         self.progress_bar.set_text("Installing Root preloader")
         out = subprocess.run(
-            [self.scriptdir+"/root.sh"],
+            ["pkexec", self.scriptdir+"/root.sh"],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT
         )
@@ -122,7 +122,7 @@ class InstallProgress(Gtk.Box):
         self.progressbar_cubic_ease(0.42)
         self.progress_bar.set_text("Installing Data Shard")
         out = subprocess.run(
-            [self.scriptdir+"/data.sh"],
+            ["pkexec", self.scriptdir+"/data.sh"],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT
         )
@@ -132,7 +132,7 @@ class InstallProgress(Gtk.Box):
         self.progressbar_cubic_ease(0.56)
         self.progress_bar.set_text("Installing System Shard")
         out = subprocess.run(
-            [self.scriptdir+"/system.sh"],
+            ["pkexec", self.scriptdir+"/system.sh"],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT
         )
@@ -142,7 +142,7 @@ class InstallProgress(Gtk.Box):
         self.progressbar_cubic_ease(0.7)
         self.progress_bar.set_text("Installing Desktop Shard")
         out = subprocess.run(
-            [self.scriptdir+"/desktop.sh"],
+            ["pkexec", self.scriptdir+"/desktop.sh"],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT
         )
@@ -152,7 +152,7 @@ class InstallProgress(Gtk.Box):
         self.progressbar_cubic_ease(0.84)
         self.progress_bar.set_text("Installing Bootloader")
         out = subprocess.run(
-            [self.scriptdir+"/bootloader.sh"],
+            ["pkexec", self.scriptdir+"/bootloader.sh"],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT
         )

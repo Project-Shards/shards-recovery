@@ -72,7 +72,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.mount_root.set_spinner, True)
             out = subprocess.run(
-                [self.scriptdir+"root/mount.sh"],
+                ["pkexec", self.scriptdir+"root/mount.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -87,7 +87,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.snapshot_root.set_spinner, True)
             out = subprocess.run(
-                [self.scriptdir+"root/snapshot.sh"],
+                ["pkexec", self.scriptdir+"root/snapshot.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -102,7 +102,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.update_root.set_spinner, True)
             out = subprocess.run(
-                [self.scriptdir+"root/update.sh"],
+                ["pkexec", self.scriptdir+"root/update.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -138,7 +138,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.mount_system.set_spinner, True)
             out = subprocess.run(
-                [self.scriptdir+"system/mount.sh"],
+                ["pkexec", self.scriptdir+"system/mount.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -153,7 +153,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.snapshot_system.set_spinner, True)
             out = subprocess.run(
-                [self.scriptdir+"system/snapshot.sh"],
+                ["pkexec", self.scriptdir+"system/snapshot.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -168,7 +168,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.update_system.set_spinner, True)
             out = subprocess.run(
-                [self.scriptdir+"system/update.sh"],
+                ["pkexec", self.scriptdir+"system/update.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -202,7 +202,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.mount_desktop.set_spinner, True)
             out = subprocess.run(
-                [self.scriptdir+"desktop/mount.sh"],
+                ["pkexec", self.scriptdir+"desktop/mount.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -217,7 +217,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.snapshot_desktop.set_spinner, True)
             out = subprocess.run(
-                [self.scriptdir+"desktop/snapshot.sh"],
+                ["pkexec", self.scriptdir+"desktop/snapshot.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -231,7 +231,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.update_desktop.set_spinner, True)
             out = subprocess.run(
-                [self.scriptdir+"desktop/update.sh"],
+                ["pkexec", self.scriptdir+"desktop/update.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -266,7 +266,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.mount_data.set_spinner, True)
             out = subprocess.run(
-                [self.scriptdir+"data/mount.sh"],
+                ["pkexec", self.scriptdir+"data/mount.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -281,7 +281,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.snapshot_data.set_spinner, True)
             out = subprocess.run(
-                [self.scriptdir+"data/snapshot.sh"],
+                ["pkexec", self.scriptdir+"data/snapshot.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -297,7 +297,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.update_data.set_spinner, True)
             out = subprocess.run(
-                [self.scriptdir+"data/update.sh"],
+                ["pkexec", self.scriptdir+"data/update.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
