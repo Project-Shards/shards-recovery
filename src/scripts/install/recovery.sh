@@ -2,8 +2,6 @@
 set -e
 set -x
 
-sleep 2
-exit 0
 
 echo "-- Mounting partitions --"
 mount /dev/disk/by-label/SHARDS /mnt -o subvol=Recovery

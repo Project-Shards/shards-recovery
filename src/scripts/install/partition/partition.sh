@@ -9,13 +9,11 @@ if [ -z "$DISK" ]; then
     exit 1
 fi
 
-#if [ ! -b "$DISK" ]; then
-#    echo "Disk $DISK does not exist"
-#    exit 1
-#fi
+if [ ! -b "$DISK" ]; then
+    echo "Disk $DISK does not exist"
+    exit 1
+fi
 
-sleep 1
-exit 0
 
 parted -s $DISK mklabel gpt
 parted -S $DISK mkpart fat32 1MiB 512MiB

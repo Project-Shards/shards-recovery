@@ -2,9 +2,6 @@
 set -e
 set -x
 
-sleep 2
-exit 0
-
 echo "-- Creating Overlay mounts for System and Desktop --"
 mkdir -p /mnt/Shards/Desktop/{usr,var,opt,tmp}
 mkdir -p /mnt/Shards/Desktop/tmp/{usr,var,opt}

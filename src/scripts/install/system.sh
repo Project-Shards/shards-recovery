@@ -2,8 +2,6 @@
 set -e
 set -x
 
-sleep 2
-exit 0
 
 echo "-- Creating bind mount from /Shards/Data/etc to /Shards/System/etc"
 mount --bind /mnt/Shards/Data/etc /mnt/Shards/System/etc

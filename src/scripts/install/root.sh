@@ -2,8 +2,6 @@
 set -e
 set -x
 
-sleep 2
-exit 0
 
 SSD=""
 lsblk -d -o ROTA /dev/disk/by-label/SHARDS | grep -q 0

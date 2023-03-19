@@ -2,8 +2,6 @@
 set -e
 set -x
 
-sleep 1
-exit 0
 
 mount /dev/disk/by-label/SHARDS /mnt
 btrfs subvolume create /mnt/Root
