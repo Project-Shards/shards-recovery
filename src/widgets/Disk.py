@@ -34,6 +34,10 @@ class Disk(Gtk.ToggleButton):
         self.type=disktype
         self.DiskName.set_label(diskname)
         self.DiskSize.set_label(disksize)
+        if "SSD" in self.type:
+            self.DiskType.set_from_icon_name("drive-harddisk-solidstate-symbolic")
+        else:
+            self.DiskType.set_from_icon_name("drive-harddisk-symbolic")
         self.connect("toggled", self._on_selected)
         if group is not None:
             self.set_group(group)

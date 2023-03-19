@@ -120,6 +120,10 @@ class ShardUpdaterWindow(Adw.ApplicationWindow):
             line-height: 20px;
         }
 
+        .first-disk {
+            margin-left: 100px;
+            margin-right: 100px;
+        }
         """
         provider = Gtk.CssProvider()
         provider.load_from_data(css, -1)
