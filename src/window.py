@@ -116,6 +116,10 @@ class ShardUpdaterWindow(Adw.ApplicationWindow):
             color: #F6BE00;
         }
 
+        .progressbar {
+            line-height: 20px;
+        }
+
         """
         provider = Gtk.CssProvider()
         provider.load_from_data(css, -1)

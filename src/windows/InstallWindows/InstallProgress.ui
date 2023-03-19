@@ -16,21 +16,17 @@
         <property name="vexpand">True</property>
         <property name="title">Installing Project Shards</property>
         <property name="description">This may take some time.</property>
+        <property name="icon-name">shardfull</property>
         <child>
-          <object class="GtkBox">
-            <property name="margin-end">50</property>
-            <property name="margin-start">50</property>
+          <object class="GtkProgressBar" id="progress_bar">
+            <property name="valign">center</property>
+            <property name="halign">fill</property>
+            <property name="fraction">0.5</property>
+            <property name="text">Installing System Shard</property>
+            <property name="show-text">true</property>
             <style>
-              <class name="card"/>
-              <class name="installwindow"/>
+              <class name="progressbar"/>
             </style>
-            <child>
-              <object class="GtkBox" id="log_box">
-                <property name="halign">fill</property>
-                <property name="valign">fill</property>
-                <property name="margin-bottom">60</property>
-              </object>
-            </child>
           </object>
         </child>
       </object>

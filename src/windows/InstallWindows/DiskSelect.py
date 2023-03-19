@@ -28,8 +28,12 @@ class DiskSelect(Gtk.Box):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-        testDisk = Disk(diskname="/dev/sda", disksize="10bla (blahajs)", disktype="SSD", group=None)
-        testDisk2 = Disk(diskname="/dev/sdb", disksize="10bla (blahajs)", disktype="SSD", group=testDisk)
+        self.selected_disk="/dev/sda"
+        testDisk = Disk(diskname="/dev/sda", disksize="10bla (blahajs)", disktype="SSD", group=None, parent=self)
+        testDisk2 = Disk(diskname="/dev/sdb", disksize="10bla (blahajs)", disktype="SSD", group=testDisk, parent=self)
         self.disk_list.append(testDisk)
         self.disk_list.append(testDisk2)
+
+    def _set_selected_disk(self, disk: str):
+        print(disk)
+        self.selected_disk=disk

@@ -26,9 +26,17 @@ class Disk(Gtk.ToggleButton):
     DiskName = Gtk.Template.Child()
     DiskSize = Gtk.Template.Child()
 
-    def __init__(self, diskname, disksize, disktype, group, **kwargs):
+    def __init__(self, diskname, disksize, disktype, group, parent, **kwargs):
         super().__init__(**kwargs)
+        self.parent = parent
+        self.name=diskname
+        self.size=disksize
+        self.type=disktype
         self.DiskName.set_label(diskname)
         self.DiskSize.set_label(disksize)
+        self.connect("toggled", self._on_selected)
         if group is not None:
             self.set_group(group)
+
+    def _on_selected(self, button):
+        self.parent._set_selected_disk(self.name)
