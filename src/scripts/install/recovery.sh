@@ -10,7 +10,7 @@ mount /dev/disk/by-label/SHARDSEFI /mnt/boot/efi
 
 echo "-- Installing Recovery Shard --"
 pacstrap -K /mnt base linux linux-firmware networkmanager btrfs-progs grub efibootmgr systemd-sysvcompat man-db man-pages texinfo nano sudo curl archlinux-keyring which base-devel bash-completion zsh-completions gparted ntfs-3g dosfstools exfat-utils openssh
-genfstab -U >> /mnt/etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt /bin/bash -c "systemctl enable NetworkManager"
 arch-chroot /mnt /bin/bash -c "systemctl enable sshd"
 
