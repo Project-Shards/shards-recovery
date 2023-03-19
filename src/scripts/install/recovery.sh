@@ -15,17 +15,17 @@ arch-chroot /mnt /bin/bash -c "systemctl enable NetworkManager"
 arch-chroot /mnt /bin/bash -c "systemctl enable sshd"
 
 echo "-- Setting up user --"
-useradd -m -p $(openssl passwd -crypt "shards") -s /bin/bash recovery
+useradd -m -p $(openssl passwd -1 "shards") -s /bin/bash shards
 usermod -aG wheel recovery
 sed 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g' /mnt/etc/sudoers
 echo "Defaults pwfeedback" >> /mnt/etc/sudoers
-touch /mnt/etc/systemd/system/getty@tty1.service.d/autologin.conf
-echo "[Service]" >> /mnt/etc/systemd/system/getty@tty1.service.d/autologin.conf
-cat  > /mnt/etc/systemd/system/getty@tty.service.d/autologin.conf << EOF
-[Service]
-ExecStart=
-ExecStart=-/usr/bin/agetty -o '-p -f -- \\u' --autologin recovery --noclear %I \$TERM
-EOF
+#touch /mnt/etc/systemd/system/getty@tty1.service.d/autologin.conf#
+#echo "[Service]" >> /mnt/etc/systemd/system/getty@tty1.service.d/autologin.conf
+#cat  > /mnt/etc/systemd/system/getty@tty.service.d/autologin.conf << EOF
+#[Service]
+#ExecStart=
+#ExecStart=-/usr/bin/agetty -o '-p -f -- \\u' --autologin recovery --noclear %I \$TERM
+#EOF
 
 
 echo "-- Installing GRUB --"
