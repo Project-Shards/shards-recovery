@@ -16,12 +16,11 @@
 #
 # SPDX-License-Identifier: GPL-3.0
 
-from gi.repository import Gtk, Adw
+from gi.repository import Gtk, Adw, GLib
+from shard_updater.utils.threading import RunAsync
+import subprocess
 import sys
-sys.path.append("/home/axtlos/.local/share/shard_installer/shard_installer")
-from shard_installer.functions.partition import Partition
-from shard_installer.functions.shards import Shards
-from shard_installer.functions.bootloader import Bootloader
+import time
 
 @Gtk.Template(resource_path='/al/getcryst/shard/updater/windows/InstallWindows/InstallProgress.ui')
 class InstallProgress(Gtk.Box):
@@ -29,23 +28,137 @@ class InstallProgress(Gtk.Box):
 
     reboot_button = Gtk.Template.Child()
     progress_bar = Gtk.Template.Child()
+    stop_install = False
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.scriptdir=sys.path[1]+"/shard_updater/scripts/install/"
+
+    def set_window(self, window):
+        self.window = window
+
+    def check_command(self, output: subprocess.CompletedProcess):
+        with open('/tmp/shardsrecovery.log', 'a') as log:
+            log.write(output.stdout.decode("utf-8"))
+        if output.returncode != 0:
+            self.progressbar_cubic_ease(1)
+            self.progress_bar.set_text(self.progress_bar.get_text()+" Failed")
+            self.window.on_install_finished(False)
+            self.stop_install=True
+
+    def progressbar_cubic_ease(self, fraction):
+        limit = (0, 1)
+        start=0
+        end=100
+        duration=100
+        def func(t: float) -> float:
+            return (t - 1) * (t - 1) * (t - 1) + 1
+
+        def ease(alpha: float) -> float:
+            t = limit[0] * (1 - alpha) + limit[1] * alpha
+            t /= duration
+            a = func(t)
+            return end * a + start * (1 - a)
+
+        for i in range(int(self.progress_bar.get_fraction()*100), int(fraction*100)):
+            time.sleep(0.01)
+            print("i "+str(i))
+            print(ease(i)/100)
+            GLib.idle_add(self.progress_bar.set_fraction, (i+ease(i)/100)/100)
 
     def on_show(self, selected_disk):
         self.selected_disk = selected_disk
+        RunAsync(self.install)
+
+    def install(self):
+        if self.stop_install:
+            return
+        self.progress_bar.set_text("Partitioning disk")
         self.progress_bar.set_fraction(0)
-        partition=Partition(selected_disk)
-        partition.start_partition()
-        self.progress_bar.set_fraction(0.16)
-        Shards.setupRecovery(mountpoint="/mnt", disk=partition, crash=False)
-        self.progress_bar.set_fraction(0.32)
-        Shards.setupRoot(mountpoint="/mnt", disk=partition, crash=False)
-        self.progress_bar.set_fraction(0.48)
-        Shards.setupData(mountpoint="/mnt/Shards/Data", crash=False)
-        self.progress_bar.set_fraction(0.64)
-        Shards.setupSystem(mountpoint="/mnt/Shards/System", crash=False)
-        self.progress_bar.set_fraction(0.8)
-        Shards.setupDesktop(mountpoint="/mnt", disk=partition, crash=False)
-        self.progress_bar.set_fraction(0.1)
+        out = subprocess.run(
+            [self.scriptdir+"/partition/partition.sh", self.selected_disk],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT
+        )
+        self.check_command(out)
+        if self.stop_install:
+            return
+        out = subprocess.run(
+            [self.scriptdir+"partition/"+("nvme" if "nvme" in self.selected_disk else "block")+".sh", self.selected_disk],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT
+        )
+        self.check_command(out)
+        if self.stop_install:
+            return
+        out = subprocess.run(
+            [self.scriptdir+"/partition/shards.sh"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT
+        )
+        self.check_command(out)
+        if self.stop_install:
+            return
+        self.progressbar_cubic_ease(0.14)
+        self.progress_bar.set_text("Installing Recovery")
+        out = subprocess.run(
+            [self.scriptdir+"/recovery.sh"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT
+        )
+        self.check_command(out)
+        if self.stop_install:
+            return
+        self.progressbar_cubic_ease(0.28)
+        self.progress_bar.set_text("Installing Root preloader")
+        out = subprocess.run(
+            [self.scriptdir+"/root.sh"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT
+        )
+        self.check_command(out)
+        if self.stop_install:
+            return
+        self.progressbar_cubic_ease(0.42)
+        self.progress_bar.set_text("Installing Data Shard")
+        out = subprocess.run(
+            [self.scriptdir+"/data.sh"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT
+        )
+        self.check_command(out)
+        if self.stop_install:
+            return
+        self.progressbar_cubic_ease(0.56)
+        self.progress_bar.set_text("Installing System Shard")
+        out = subprocess.run(
+            [self.scriptdir+"/system.sh"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT
+        )
+        self.check_command(out)
+        if self.stop_install:
+            return
+        self.progressbar_cubic_ease(0.7)
+        self.progress_bar.set_text("Installing Desktop Shard")
+        out = subprocess.run(
+            [self.scriptdir+"/desktop.sh"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT
+        )
+        self.check_command(out)
+        if self.stop_install:
+            return
+        self.progressbar_cubic_ease(0.84)
+        self.progress_bar.set_text("Installing Bootloader")
+        out = subprocess.run(
+            [self.scriptdir+"/bootloader.sh"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT
+        )
+        self.check_command(out)
+        if self.stop_install:
+            return
+        self.progressbar_cubic_ease(1)
+        self.progress_bar.set_text("Install Finished")
+        self.window.on_install_finished(True)

@@ -2,37 +2,32 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <requires lib="Adw" version="1.2"/>
-  <template class="InstallWindow" parent="AdwBin">
+  <template class="InstallWindow" parent="GtkStack">
     <style>
-              <class name="window"/>
-            </style>
-            <property name="halign">center</property>
-            <property name="valign">center</property>
-            <property name="margin-top">100</property>
-            <property name="margin-bottom">100</property>
-
-                <property name="vexpand">true</property>
-                <property name="hexpand">true</property>
-            <child>
-              <object class="AdwCarousel" id="carousel">
-                <property name="orientation">horizontal</property>
-                <property name="vexpand">true</property>
-                <property name="hexpand">true</property>
-                <property name="halign">center</property>
-                <property name="valign">center</property>
-                <property name="allow-mouse-drag">false</property>
-                <property name="allow-scroll-wheel">false</property>
-                <property name="allow-long-swipes">false</property>
-                <property name="interactive">false</property>
-                <child>
-                  <object class="DiskSelect" id="Disk_select">
-                  </object>
-                </child>
-                <child>
-                  <object class="InstallProgress" id="Install_progress">
-                  </object>
-                </child>
-              </object>
-            </child>
+      <class name="window"/>
+    </style>
+    <property name="halign">center</property>
+    <property name="valign">center</property>
+    <property name="margin-top">100</property>
+    <property name="transition-type">slide-left</property>
+    <property name="margin-bottom">100</property>
+    <property name="vexpand">true</property>
+    <property name="hexpand">true</property>
+    <child>
+      <object class="DiskSelect" id="Disk_select">
+      </object>
+    </child>
+    <child>
+      <object class="InstallProgress" id="Install_progress">
+      </object>
+    </child>
+    <child>
+      <object class="InstallFail" id="InstallFail">
+      </object>
+    </child>
+    <child>
+      <object class="InstallFinish" id="InstallFinish">
+      </object>
+    </child>
   </template>
 </interface>

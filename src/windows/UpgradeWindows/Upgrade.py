@@ -19,6 +19,7 @@
 from gi.repository import Gtk, Adw, GLib, GdkPixbuf, Gdk
 import time
 import subprocess
+import sys
 from shard_updater.widgets.MenuButton import MenuButton
 from shard_updater.widgets.UpdateStep import UpdateStep
 from shard_updater.utils.threading import RunAsync
@@ -48,6 +49,7 @@ class Upgrade(Adw.Bin):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.scriptdir = sys.path[1]+"/shard_updater/scripts/upgrade/"
 
     def set_window(self, window):
         self.window = window
@@ -70,7 +72,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.mount_root.set_spinner, True)
             out = subprocess.run(
-                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/root/mount.sh"],
+                [self.scriptdir+"root/mount.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -85,7 +87,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.snapshot_root.set_spinner, True)
             out = subprocess.run(
-                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/root/snapshot.sh"],
+                [self.scriptdir+"root/snapshot.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -100,7 +102,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.update_root.set_spinner, True)
             out = subprocess.run(
-                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/root/update.sh"],
+                [self.scriptdir+"root/update.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -136,7 +138,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.mount_system.set_spinner, True)
             out = subprocess.run(
-                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/system/mount.sh"],
+                [self.scriptdir+"system/mount.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -151,7 +153,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.snapshot_system.set_spinner, True)
             out = subprocess.run(
-                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/system/snapshot.sh"],
+                [self.scriptdir+"system/snapshot.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -166,7 +168,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.update_system.set_spinner, True)
             out = subprocess.run(
-                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/system/update.sh"],
+                [self.scriptdir+"system/update.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -200,7 +202,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.mount_desktop.set_spinner, True)
             out = subprocess.run(
-                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/desktop/mount.sh"],
+                [self.scriptdir+"desktop/mount.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -215,7 +217,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.snapshot_desktop.set_spinner, True)
             out = subprocess.run(
-                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/desktop/snapshot.sh"],
+                [self.scriptdir+"desktop/snapshot.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -229,7 +231,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.update_desktop.set_spinner, True)
             out = subprocess.run(
-                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/desktop/update.sh"],
+                [self.scriptdir+"desktop/update.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -264,7 +266,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.mount_data.set_spinner, True)
             out = subprocess.run(
-                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/data/mount.sh"],
+                [self.scriptdir+"data/mount.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -279,7 +281,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.snapshot_data.set_spinner, True)
             out = subprocess.run(
-                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/data/snapshot.sh"],
+                [self.scriptdir+"data/snapshot.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
@@ -295,7 +297,7 @@ class Upgrade(Adw.Bin):
                 return
             GLib.idle_add(self.update_data.set_spinner, True)
             out = subprocess.run(
-                ["/usr/share/shard_updater/shard_updater/scripts/upgrade/data/update.sh"],
+                [self.scriptdir+"data/update.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.2"/>
+  <template class="InstallFinish" parent="AdwBin">
+    <child>
+      <object class="AdwStatusPage" id="welcome">
+        <property name="title">Install Finished</property>
+        <property name="description">You can now reboot your computer</property>
+        <property name="icon-name">shardfull</property>
+        <child>
+          <object class="GtkBox">
+            <property name="valign">center</property>
+            <property name="halign">center</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkButton">
+                <property name="label">Reboot Now</property>
+                <property name="margin-bottom">10</property>
+                <style>
+                  <class name="pill"/>
+                  <class name="suggested-action"/>
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

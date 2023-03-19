@@ -10,6 +10,8 @@
     <file preprocess="xml-stripblanks">windows/InstallWindow.ui</file>
     <file preprocess="xml-stripblanks">windows/InstallWindows/DiskSelect.ui</file>
     <file preprocess="xml-stripblanks">windows/InstallWindows/InstallProgress.ui</file>
+    <file preprocess="xml-stripblanks">windows/InstallWindows/InstallFinish.ui</file>
+    <file preprocess="xml-stripblanks">windows/InstallWindows/InstallFail.ui</file>
     <file preprocess="xml-stripblanks">windows/UpgradeWindow.ui</file>
     <file preprocess="xml-stripblanks">windows/UpgradeWindows/Upgrade.ui</file>
     <file preprocess="xml-stripblanks">windows/UpgradeWindows/UpgradeFail.ui</file>
