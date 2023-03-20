@@ -15,8 +15,8 @@ arch-chroot /mnt /bin/bash -c "systemctl enable NetworkManager"
 arch-chroot /mnt /bin/bash -c "systemctl enable sshd"
 
 echo "-- Setting up user --"
-useradd -m -p $(openssl passwd -1 "shards") -s /bin/bash shards
-usermod -aG wheel recovery
+arch-chroot /mnt useradd -m -p $(openssl passwd -1 "shards") -s /bin/bash shards
+arch-chroot /mnt usermod -aG wheel shards
 sed 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g' /mnt/etc/sudoers
 echo "Defaults pwfeedback" >> /mnt/etc/sudoers
 #touch /mnt/etc/systemd/system/getty@tty1.service.d/autologin.conf#
@@ -32,6 +32,13 @@ echo "-- Installing GRUB --"
 arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=SHARDS_RECOVERY
 arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=SHARDS_RECOVERY --removable
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+
+# for some reason gpg-agent continues running, so we have to find the pid with lsof and kill it
+echo "-- Stopping gpg-agent --"
+set +e
+gpg_agent_pid=$(lsof -t +D /mnt/etc/pacman.d/gnupg/)
+kill ${gpg_agent_pid}
+set -e
 
 echo "-- Unmounting partitions --"
 umount -R /mnt

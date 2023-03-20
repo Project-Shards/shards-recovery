@@ -1,5 +1,4 @@
 #!/usr/bin/bash
-set -e
 set -x
 
 
@@ -8,6 +7,8 @@ lsblk -d -o ROTA /dev/disk/by-label/SHARDS | grep -q 0
 if [[ $? -eq 0 ]]; then
     SSD="ssd,"
 fi
+
+set -e
 
 echo "-- Mounting Root shard to /mnt --"
 mount /dev/disk/by-label/SHARDS /mnt -o subvol=Root
@@ -35,6 +36,15 @@ echo -e "\\x1b[35;1m --STARTING PROJECT SHARD STAGE 2-- \\x1b[39m"
 exec /Shards/System/sbin/init
 EOF
 chmod +x /mnt/init
+
+# for some reason gpg-agent continues running, so we have to find the pid with lsof and kill it
+echo "-- Stopping gpg-agent --"
+set +e
+gpg_pid_agent=$(lsof -t +D /mnt/etc/pacman.d/gnupg/)
+kill ${gpg_agent_pid}
+gpg_agent_pid=$(lsof -t +D /mnt/etc/pacman.d/gnupg/)
+kill ${gpg_agent_pid}
+set -e
 
 echo "-- Mounting Shards --"
 mkdir -p /mnt/Shards/{Data,Desktop,System,Users}

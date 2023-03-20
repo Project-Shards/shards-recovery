@@ -19,10 +19,11 @@ echo "-- Creating bind mount from /Shards/Users to /home --"
 mount --bind /mnt/Shards/Users /mnt/home
 
 echo "-- Mounting EFI partition --"
+mkdir -p /mnt/boot/efi
 mount /dev/disk/by-label/SHARDSEFI /mnt/boot/efi
 
 echo "-- Installing Desktop Shard --"
-pacstrap -K /mnt xorg gnome sushi pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-nerd-fonts-symbols-common power-profiles-deamon cups cups-pdf
+pacstrap -K /mnt xorg gnome sushi pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-nerd-fonts-symbols-common power-profiles-daemon cups cups-pdf
 arch-chroot /mnt systemctl enable gdm
 
 echo "-- Removing Overlay mounts for System and Desktop --"
@@ -34,3 +35,6 @@ echo "-- Creating Overlay mounts for System, Desktop and Data --"
 mount -t overlay overlay -o lowerdir=/mnt/Shards/System/usr:/mnt/Shards/Desktop/usr,upperdir=/mnt/Shards/Data/usr,workdir=/mnt/Shards/Data/tmp/usr /mnt/usr
 mount -t overlay overlay -o lowerdir=/mnt/Shards/System/var:/mnt/Shards/Desktop/var,upperdir=/mnt/Shards/Data/var,workdir=/mnt/Shards/Data/tmp/var /mnt/var
 mount -t overlay overlay -o lowerdir=/mnt/Shards/System/opt:/mnt/Shards/Desktop/opt,upperdir=/mnt/Shards/Data/opt,workdir=/mnt/Shards/Data/tmp/opt /mnt/opt
+
+echo "-- Creating Temporary first-setup User --"
+arch-chroot /mnt useradd -m -G wheel -s /bin/bash first-setup
