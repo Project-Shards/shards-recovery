@@ -8,9 +8,7 @@
     </style>
     <property name="halign">center</property>
     <property name="valign">center</property>
-    <property name="margin-top">100</property>
     <property name="transition-type">slide-left</property>
-    <property name="margin-bottom">100</property>
     <property name="vexpand">true</property>
     <property name="hexpand">true</property>
     <child>

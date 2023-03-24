@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.2"/>
+  <template class="LogView" parent="AdwBin">
+    <property name="halign">fill</property>
+    <property name="vexpand">true</property>
+    <property name="hexpand">true</property>
+    <property name="valign">fill</property>
+    <child>
+      <object class="GtkBox" id="LogBox">
+        <property name="orientation">vertical</property>
+        <property name="halign">fill</property>
+        <property name="vexpand">true</property>
+        <property name="hexpand">true</property>
+        <property name="valign">fill</property>
+      </object>
+    </child>
+  </template>
+</interface>

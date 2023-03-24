@@ -7,6 +7,7 @@
     <file preprocess="xml-stripblanks">widgets/Disk.ui</file>
     <file preprocess="xml-stripblanks">widgets/UpdateStep.ui</file>
     <file preprocess="xml-stripblanks">windows/RecoveryTerminalWindow.ui</file>
+    <file preprocess="xml-stripblanks">windows/LogView.ui</file>
     <file preprocess="xml-stripblanks">windows/InstallWindow.ui</file>
     <file preprocess="xml-stripblanks">windows/InstallWindows/DiskSelect.ui</file>
     <file preprocess="xml-stripblanks">windows/InstallWindows/InstallProgress.ui</file>

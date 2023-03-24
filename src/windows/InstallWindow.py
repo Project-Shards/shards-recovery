@@ -50,10 +50,14 @@ class InstallWindow(Gtk.Stack):
 
     def on_install_finished(self, success: bool):
         print("Install finished: " + str(success))
+        print("Window height "+ str( self.window.get_allocated_height()))
+        print("Window width "+ str( self.window.get_allocated_width()))
         if not success:
             self.set_visible_child(self.InstallFail)
-        if success:
+            self.InstallFail.on_show(self.headerbar, self, self.window.get_allocated_width(), self.window.get_allocated_height())
+        else:
             self.set_visible_child(self.InstallFinish)
+            self.InstallFinish.on_show(self.headerbar, self, self.window.get_allocated_width(), self.window.get_allocated_height())
 
     def on_disk_select_next_clicked(self, button):
         self.set_visible_child(self.Install_progress)

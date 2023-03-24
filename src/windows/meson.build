@@ -5,7 +5,8 @@ shard_updater_sources = [
     '__init__.py',
     'RecoveryTerminalWindow.py',
     'InstallWindow.py',
-    'UpgradeWindow.py'
+    'UpgradeWindow.py',
+    'LogView.py'
 ]
 install_data(shard_updater_sources, install_dir: windowsdir)
 
