@@ -23,7 +23,7 @@ import sys
 from shard_updater.widgets.UpdateStep import UpdateStep
 
 @Gtk.Template(resource_path='/al/getcryst/shard/updater/windows/UpgradeWindows/Upgrade.ui')
-class Upgrade(Adw.Bin):
+class Upgrade(Gtk.Box):
     __gtype_name__="Upgrade"
 
     root = Gtk.Template.Child()
@@ -82,6 +82,7 @@ class Upgrade(Adw.Bin):
 
         def root_snapshot_start(self):
             if self.upgrade_failed:
+                GLib.idle_add(self.root.set_expanded, False)
                 return
             GLib.idle_add(self.snapshot_root.set_spinner, True)
             out = subprocess.run(
@@ -97,6 +98,7 @@ class Upgrade(Adw.Bin):
 
         def root_update_start(self):
             if self.upgrade_failed:
+                GLib.idle_add(self.root.set_expanded, False)
                 return
             GLib.idle_add(self.update_root.set_spinner, True)
             out = subprocess.run(
@@ -113,6 +115,7 @@ class Upgrade(Adw.Bin):
 
         def on_root_finish(self):
             if self.upgrade_failed:
+                GLib.idle_add(self.root.set_expanded, False)
                 return
             GLib.idle_add(self.root.set_icon_name, "test-pass")
             GLib.idle_add(self.root.set_expanded, False)
@@ -133,6 +136,7 @@ class Upgrade(Adw.Bin):
 
         def system_mount_start(self):
             if self.upgrade_failed:
+                GLib.idle_add(self.system.set_expanded, False)
                 return
             GLib.idle_add(self.mount_system.set_spinner, True)
             out = subprocess.run(
@@ -148,6 +152,7 @@ class Upgrade(Adw.Bin):
 
         def system_snapshot_start(self):
             if self.upgrade_failed:
+                GLib.idle_add(self.system.set_expanded, False)
                 return
             GLib.idle_add(self.snapshot_system.set_spinner, True)
             out = subprocess.run(
@@ -163,6 +168,7 @@ class Upgrade(Adw.Bin):
 
         def system_update_start(self):
             if self.upgrade_failed:
+                GLib.idle_add(self.system.set_expanded, False)
                 return
             GLib.idle_add(self.update_system.set_spinner, True)
             out = subprocess.run(
@@ -178,6 +184,7 @@ class Upgrade(Adw.Bin):
 
         def on_system_finish(self):
             if self.upgrade_failed:
+                GLib.idle_add(self.system.set_expanded, False)
                 return
             GLib.idle_add(self.system.set_icon_name, "test-pass")
             GLib.idle_add(self.system.set_expanded, False)
@@ -197,6 +204,7 @@ class Upgrade(Adw.Bin):
 
         def desktop_mount_start(self):
             if self.upgrade_failed:
+                GLib.idle_add(self.desktop.set_expanded, False)
                 return
             GLib.idle_add(self.mount_desktop.set_spinner, True)
             out = subprocess.run(
@@ -212,6 +220,7 @@ class Upgrade(Adw.Bin):
 
         def desktop_snapshot_start(self):
             if self.upgrade_failed:
+                GLib.idle_add(self.desktop.set_expanded, False)
                 return
             GLib.idle_add(self.snapshot_desktop.set_spinner, True)
             out = subprocess.run(
@@ -226,6 +235,7 @@ class Upgrade(Adw.Bin):
 
         def desktop_update_start(self):
             if self.upgrade_failed:
+                GLib.idle_add(self.desktop.set_expanded, False)
                 return
             GLib.idle_add(self.update_desktop.set_spinner, True)
             out = subprocess.run(
@@ -241,6 +251,7 @@ class Upgrade(Adw.Bin):
 
         def on_desktop_finish(self):
             if self.upgrade_failed:
+                GLib.idle_add(self.desktop.set_expanded, False)
                 return
             GLib.idle_add(self.desktop.set_icon_name, "test-pass")
             GLib.idle_add(self.desktop.set_expanded, False)
@@ -261,6 +272,7 @@ class Upgrade(Adw.Bin):
 
         def data_mount_start(self):
             if self.upgrade_failed:
+                GLib.idle_add(self.data.set_expanded, False)
                 return
             GLib.idle_add(self.mount_data.set_spinner, True)
             out = subprocess.run(
@@ -276,6 +288,7 @@ class Upgrade(Adw.Bin):
 
         def data_snapshot_start(self):
             if self.upgrade_failed:
+                GLib.idle_add(self.data.set_expanded, False)
                 return
             GLib.idle_add(self.snapshot_data.set_spinner, True)
             out = subprocess.run(
@@ -292,6 +305,7 @@ class Upgrade(Adw.Bin):
 
         def data_update_start(self):
             if self.upgrade_failed:
+                GLib.idle_add(self.data.set_expanded, False)
                 return
             GLib.idle_add(self.update_data.set_spinner, True)
             out = subprocess.run(
@@ -307,6 +321,7 @@ class Upgrade(Adw.Bin):
 
         def on_data_finish(self):
             if self.upgrade_failed:
+                GLib.idle_add(self.data.set_expanded, False)
                 return
             GLib.idle_add(self.data.set_icon_name, "test-pass")
             GLib.idle_add(self.data.set_expanded, False)

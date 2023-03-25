@@ -2,6 +2,9 @@
 set -e
 set -x
 
+sleep 2
+exit 0
+
 DISK=$1
 if [ -z "$DISK" ]; then
     echo "Usage: $0 <disk>"

@@ -35,7 +35,7 @@ class InstallFinish(Adw.Bin):
         self.poweroff = MenuButton(label="Shut down Computer", on_clicked=self.poweroff)
         self.log = MenuButton(label="Show log", on_clicked=self.toggle_log)
         self.log_show = False
-        self.log_window = LogView(logfile='/tmp/shardsrecovery.log')
+        self.log_window_installfinish = LogView(logfile='/tmp/shardsrecovery.log')
 
     def poweroff(self, widget):
         def poweroff_yes():
@@ -56,20 +56,20 @@ class InstallFinish(Adw.Bin):
         self.window.on_quit_button_clicked(widget)
     def animate_resize(self, targetwidth, targetheight, currentwidth, currentheight):
         def animate_height(self, targetheight, currentheight):
-            for i in range(currentheight, targetheight, -1 if currentheight > targetheight else 1):
+            for i in range(currentheight, targetheight, -2 if currentheight > targetheight else 2):
                 if currentheight == targetheight:
                     break
                 GLib.idle_add(self.window.set_margin_top, i)
                 GLib.idle_add(self.window.set_margin_bottom, i)
-                time.sleep(0.001)
+                time.sleep(0.0004)
 
         def animate_width(self, targetwidth, currentwidth):
-            for i in range(currentwidth, targetwidth, -1 if currentwidth > targetwidth else 1):
+            for i in range(currentwidth, targetwidth, -2 if currentwidth > targetwidth else 2):
                 if currentwidth == targetwidth:
                     break
                 GLib.idle_add(self.window.set_margin_start, i)
                 GLib.idle_add(self.window.set_margin_end, i)
-                time.sleep(0.001)
+                time.sleep(0.0004)
         RunAsync(animate_height, None, self, targetheight, currentheight)
         RunAsync(animate_width, None, self, targetwidth, currentwidth)
 
@@ -78,8 +78,8 @@ class InstallFinish(Adw.Bin):
         print("Width "+str(self.window.get_allocated_width()))
         if not self.log_show:
             self.window.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
-            self.window.set_visible_child(self.log_window)
-            self.log_window.on_show()
+            self.window.set_visible_child(self.log_window_installfinish)
+            self.log_window_installfinish.on_show()
             self.window.set_margin_start(self.widthmargin)
             self.window.set_margin_end(self.widthmargin)
             self.window.set_margin_top(self.heightmargin)
@@ -87,8 +87,8 @@ class InstallFinish(Adw.Bin):
             self.window.set_valign(Gtk.Align.FILL)
             self.window.set_halign(Gtk.Align.FILL)
             self.animate_resize(
-                targetwidth=self.widthmargin-190,
-                targetheight=self.heightmargin-190,
+                targetwidth=self.widthmargin-int(self.widthmargin/1.5),
+                targetheight=self.heightmargin-int(self.heightmargin/1.5),
                 currentwidth=self.widthmargin,
                 currentheight=self.heightmargin
             )
@@ -100,8 +100,8 @@ class InstallFinish(Adw.Bin):
             self.animate_resize(
                 targetwidth=self.widthmargin,
                 targetheight=self.heightmargin,
-                currentwidth=self.widthmargin-190,
-                currentheight=self.heightmargin-190
+                currentwidth=self.widthmargin-int(self.widthmargin/1.5),
+                currentheight=self.heightmargin-int(self.heightmargin/1.5)
             )
             self.log_show = False
             self.window.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT)
@@ -109,7 +109,7 @@ class InstallFinish(Adw.Bin):
     def on_show(self, headerbar, window, window_width, window_height):
         self.window = window
         self.headerbar = headerbar
-        self.window.add_child(self.log_window)
+        self.window.add_child(self.log_window_installfinish)
         self.screenwidth = window_width
         self.screenheight = window_height
         self.heightmargin = math.ceil(abs(self.screenheight-self.window.get_allocated_height())/2)-25 # -25 to account for the headerbar

@@ -8,7 +8,8 @@
     <property name="orientation">horizontal</property>
     <child>
       <object class="GtkImage">
-        <property name="icon-name">emoji-nature-symbolic</property>
+        <property name="icon-name">al.getcryst.shard.updater-symbolic</property>
+        <property name="pixel-size">25</property>
       </object>
     </child>
     <child>

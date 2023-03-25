@@ -40,12 +40,24 @@ class UpgradeWindow(Gtk.Stack):
 
 
     def upgrade_finished(self, success: bool):
+        print("Window height "+ str( self.window.get_allocated_height()))
+        print("Window width "+ str( self.window.get_allocated_width()))
         if success:
             self.set_visible_child(self.upgradefinish)
-            self.upgradefinish.on_show(self.headerbar)
+            self.upgradefinish.on_show(
+                self.headerbar,
+                self,
+                self.window.get_allocated_width(),
+                self.window.get_allocated_height()
+            )
         else:
             self.set_visible_child(self.upgradefail)
-            self.upgradefail.on_show(self.headerbar)
+            self.upgradefail.on_show(
+                self.headerbar,
+                self,
+                self.window.get_allocated_width(),
+                self.window.get_allocated_height()
+            )
 
     def on_show(self):
         self.headerbar.set_title("Project Shards Updater")
@@ -53,3 +65,6 @@ class UpgradeWindow(Gtk.Stack):
         if not self.update_started:
             RunAsync(self.upgrade.root_step)
             self.update_started=True
+
+    def on_quit_button_clicked(self, button):
+        self.window.switch_to_main()
