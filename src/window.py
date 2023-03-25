@@ -133,9 +133,18 @@ class ShardUpdaterWindow(Adw.ApplicationWindow):
             priority=Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
         )
         self.install_window=InstallWindow(self, self.header_bar)
-        self.shard_terminal=RecoveryTerminalWindow(self, self.header_bar, command=["/usr/share/shard-updater/shard-shell.sh"])
+        self.shard_terminal=RecoveryTerminalWindow(
+            self,
+            self.header_bar,
+            command=["/usr/share/shard-updater/shard-shell.sh"]
+        )
+
         self.update_window=UpgradeWindow(self, self.header_bar)
-        self.recovery_terminal=RecoveryTerminalWindow(self, self.header_bar, command=["bash"])
+        self.recovery_terminal=RecoveryTerminalWindow(
+            self,
+            self.header_bar,
+            command=["bash"]
+        )
         self.install_window.set_visible(False)
         self.shard_terminal.set_visible(False)
         self.update_window.set_visible(False)

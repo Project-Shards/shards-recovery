@@ -16,7 +16,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0
 
-from gi.repository import Gtk, Adw, GLib
+from gi.repository import Gtk, GLib
 from shard_updater.utils.threading import RunAsync
 import subprocess
 import sys
@@ -84,7 +84,9 @@ class InstallProgress(Gtk.Box):
         if self.stop_install:
             return
         out = subprocess.run(
-            ["pkexec", self.scriptdir+"partition/"+("nvme" if "nvme" in self.selected_disk else "block")+".sh", self.selected_disk],
+            ["pkexec",
+             self.scriptdir+"partition/"+("nvme" if "nvme" in self.selected_disk else "block")+".sh",
+             self.selected_disk],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT
         )

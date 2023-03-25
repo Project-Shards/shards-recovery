@@ -36,7 +36,10 @@ class RecoveryTerminalWindow(Adw.Bin):
         self.window = window
         self.headerbar = headerbar
 
-        self.button = MenuButton(label="Quit Terminal", on_clicked=self.on_quit_button_clicked)
+        self.button = MenuButton(
+            label="Quit Terminal",
+            on_clicked=self.on_quit_button_clicked
+        )
         self.command = command
         self.vte_instance = Vte.Terminal()
         self.vte_instance.set_cursor_blink_mode(Vte.CursorBlinkMode.ON)

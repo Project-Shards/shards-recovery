@@ -16,7 +16,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0
 
-from gi.repository import Gtk, Adw
+from gi.repository import Gtk
 from shard_updater.windows.InstallWindows.DiskSelect import DiskSelect
 from shard_updater.windows.InstallWindows.InstallProgress import InstallProgress
 from shard_updater.windows.InstallWindows.InstallFinish import InstallFinish
@@ -29,15 +29,21 @@ class InstallWindow(Gtk.Stack):
 
     Disk_select = Gtk.Template.Child()
     Install_progress = Gtk.Template.Child()
-    InstallFail = Gtk.Template.Child()
-    InstallFinish = Gtk.Template.Child()
+    Install_fail = Gtk.Template.Child()
+    Install_finish = Gtk.Template.Child()
 
     def __init__(self, window, headerbar, **kwargs):
         super().__init__(**kwargs)
         self.window = window
         self.headerbar = headerbar
-        self.button = MenuButton(label="Quit Installer", on_clicked=self.on_quit_button_clicked)
-        self.Disk_select.continue_button.connect("clicked", self.on_disk_select_next_clicked)
+        self.button = MenuButton(
+            label="Quit Installer",
+            on_clicked=self.on_quit_button_clicked
+        )
+        self.Disk_select.continue_button.connect(
+            "clicked",
+            self.on_disk_select_next_clicked
+        )
         self.Install_progress.set_window(self)
 
     def on_show(self):
@@ -53,11 +59,21 @@ class InstallWindow(Gtk.Stack):
         print("Window height "+ str( self.window.get_allocated_height()))
         print("Window width "+ str( self.window.get_allocated_width()))
         if not success:
-            self.set_visible_child(self.InstallFail)
-            self.InstallFail.on_show(self.headerbar, self, self.window.get_allocated_width(), self.window.get_allocated_height())
+            self.set_visible_child(self.Install_fail)
+            self.Install_fail.on_show(
+                self.headerbar,
+                self,
+                self.window.get_allocated_width(),
+                self.window.get_allocated_height()
+            )
         else:
-            self.set_visible_child(self.InstallFinish)
-            self.InstallFinish.on_show(self.headerbar, self, self.window.get_allocated_width(), self.window.get_allocated_height())
+            self.set_visible_child(self.Install_finish)
+            self.Install_finish.on_show(
+                self.headerbar,
+                self,
+                self.window.get_allocated_width(),
+                self.window.get_allocated_height()
+            )
 
     def on_disk_select_next_clicked(self, button):
         self.set_visible_child(self.Install_progress)

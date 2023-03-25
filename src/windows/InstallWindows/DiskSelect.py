@@ -16,7 +16,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0
 
-from gi.repository import Gtk, Adw
+from gi.repository import Gtk
 from shard_updater.widgets.Disk import Disk
 import subprocess
 
@@ -32,18 +32,34 @@ class DiskSelect(Gtk.Box):
         self.disks = []
         self.get_disks()
         self.selected_disk=None
-        firstdisk = Disk(diskname=self.disks[0], disksize=self.get_disk_size(self.disks[0]), disktype=self.get_disk_type(self.disks[0]), group=None, parent=self)
+        firstdisk = Disk(
+            diskname=self.disks[0],
+            disksize=self.get_disk_size(self.disks[0]),
+            disktype=self.get_disk_type(self.disks[0]),
+            group=None,
+            parent=self
+        )
         firstdisk.add_css_class("first-disk")
         self.disk_list.append(firstdisk)
         for i in self.disks:
             if i == self.disks[0]:
                 continue
-            disk = Disk(diskname=i, disksize=self.get_disk_size(i), disktype=self.get_disk_type(i), group=firstdisk, parent=self)
+            disk = Disk(
+                diskname=i,
+                disksize=self.get_disk_size(i),
+                disktype=self.get_disk_type(i),
+                group=firstdisk,
+                parent=self
+            )
             firstdisk.remove_css_class("first-disk")
             self.disk_list.append(disk)
 
     def get_disks(self):
-        output = subprocess.run(["lsblk", "-pdo", "NAME"], capture_output=True, text=True).stdout
+        output = subprocess.run(
+            ["lsblk", "-pdo", "NAME"],
+            capture_output=True,
+            text=True
+        ).stdout
         output = output.split()
         output = [x for x in output if "zram" not in x]
         output = [x for x in output if "NAME" not in x]
@@ -53,7 +69,11 @@ class DiskSelect(Gtk.Box):
         self.disks=output
 
     def get_disk_type(self, disk):
-        output = subprocess.run(["lsblk", "-d", "-o", "rota", disk], capture_output=True, text=True).stdout
+        output = subprocess.run(
+            ["lsblk", "-d", "-o", "rota", disk],
+            capture_output=True,
+            text=True
+        ).stdout
         output = output.split()
         output = [x for x in output if "ROTA" not in x]
 
@@ -68,7 +88,11 @@ class DiskSelect(Gtk.Box):
 
 
     def get_disk_size(self, disk: str) -> str:
-        output = subprocess.run(["lsblk", "-pdbo", "SIZE", disk], capture_output=True, text=True).stdout
+        output = subprocess.run(
+            ["lsblk", "-pdbo", "SIZE", disk],
+            capture_output=True,
+            text=True
+        ).stdout
         output = output.split()
         output = [x for x in output if "SIZE" not in x]
 

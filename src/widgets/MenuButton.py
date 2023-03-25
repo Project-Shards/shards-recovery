@@ -16,7 +16,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0
 
-from gi.repository import Gtk, Adw
+from gi.repository import Gtk
 
 @Gtk.Template(resource_path='/al/getcryst/shard/updater/widgets/MenuButton.ui')
 class MenuButton(Gtk.Button):

@@ -16,8 +16,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0
 
-from gi.repository import Gtk, Adw, GLib, GdkPixbuf, Gdk
-import time
+from gi.repository import Gtk, Adw
 from shard_updater.widgets.MenuButton import MenuButton
 
 @Gtk.Template(resource_path='/al/getcryst/shard/updater/windows/UpgradeWindows/UpgradeFinish.ui')

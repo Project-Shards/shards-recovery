@@ -17,7 +17,6 @@
 # SPDX-License-Identifier: GPL-3.0
 
 from gi.repository import Gtk, Adw, GtkSource
-from shard_updater.widgets.MenuButton import MenuButton
 
 @Gtk.Template(resource_path='/al/getcryst/shard/updater/windows/LogView.ui')
 class LogView(Adw.Bin):
@@ -29,20 +28,22 @@ class LogView(Adw.Bin):
         super().__init__(**kwargs)
 
         self.logfile = logfile
-        with open(self.logfile, 'r') as file:
-            self.content = file.read()
-
         scrolled_view = Gtk.ScrolledWindow(vexpand=True, hexpand=True)
         style_scheme_manager = GtkSource.StyleSchemeManager.get_default()
-        text_buffer = GtkSource.Buffer(
+        self.text_buffer = GtkSource.Buffer(
             highlight_syntax=False,
             style_scheme=style_scheme_manager.get_scheme("oblivion"),
         )
         text_view = GtkSource.View(
-            buffer=text_buffer, show_line_numbers=True, monospace=True
+            buffer=self.text_buffer, show_line_numbers=True, monospace=True
         )
-        text_buffer = text_view.get_buffer()
-        buffer_iter = text_buffer.get_end_iter()
-        text_buffer.insert(buffer_iter, self.content)
+        self.text_buffer = text_view.get_buffer()
+        self.buffer_iter = self.text_buffer.get_end_iter()
+        self.text_buffer.insert(self.buffer_iter, "Loading log file...")
         scrolled_view.set_child(text_view)
         self.LogBox.append(scrolled_view)
+
+    def on_show(self):
+        with open(self.logfile, 'r') as file:
+            self.content = file.read()
+        self.text_buffer.set_text(self.content, -1)

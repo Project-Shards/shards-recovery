@@ -16,13 +16,11 @@
 #
 # SPDX-License-Identifier: GPL-3.0
 
-from gi.repository import Gtk, Adw, GLib, GdkPixbuf, Gdk
+from gi.repository import Gtk, Adw, GLib
 import time
 import subprocess
 import sys
-from shard_updater.widgets.MenuButton import MenuButton
 from shard_updater.widgets.UpdateStep import UpdateStep
-from shard_updater.utils.threading import RunAsync
 
 @Gtk.Template(resource_path='/al/getcryst/shard/updater/windows/UpgradeWindows/Upgrade.ui')
 class Upgrade(Adw.Bin):

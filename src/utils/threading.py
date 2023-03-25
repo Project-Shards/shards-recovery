@@ -1,4 +1,5 @@
-# This file was taken from bottles <https://usebottles.com> with the permission from brombinmirko
+# This file was taken from bottles <https://usebottles.com>
+# with the permission from brombinmirko
 #
 # threading.py
 #
@@ -20,9 +21,6 @@ import os
 import sys
 import threading
 import traceback
-
-from gettext import gettext as _
-
 from gi.repository import GLib
 
 

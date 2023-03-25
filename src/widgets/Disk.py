@@ -16,7 +16,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0
 
-from gi.repository import Gtk, Adw, GdkPixbuf, Gdk, GLib
+from gi.repository import Gtk
 
 @Gtk.Template(resource_path='/al/getcryst/shard/updater/widgets/Disk.ui')
 class Disk(Gtk.ToggleButton):

@@ -17,9 +17,7 @@
 # SPDX-License-Identifier: GPL-3.0
 
 
-from gi.repository import Gtk, Adw, GLib, GdkPixbuf, Gdk
-import time
-from shard_updater.widgets.MenuButton import MenuButton
+from gi.repository import Gtk
 from shard_updater.utils.threading import RunAsync
 from shard_updater.windows.UpgradeWindows.Upgrade import Upgrade
 from shard_updater.windows.UpgradeWindows.UpgradeFail import UpgradeFail

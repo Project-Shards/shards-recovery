@@ -20,11 +20,11 @@
       </object>
     </child>
     <child>
-      <object class="InstallFail" id="InstallFail">
+      <object class="InstallFail" id="Install_fail">
       </object>
     </child>
     <child>
-      <object class="InstallFinish" id="InstallFinish">
+      <object class="InstallFinish" id="Install_finish">
       </object>
     </child>
   </template>

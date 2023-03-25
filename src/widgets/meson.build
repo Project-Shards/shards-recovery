@@ -5,6 +5,7 @@ shard_updater_sources = [
     '__init__.py',
     'MenuButton.py',
     'Disk.py',
-    'UpdateStep.py'
+    'UpdateStep.py',
+    'YNDialog.py'
 ]
 install_data(shard_updater_sources, install_dir: widgetsdir)

@@ -25,7 +25,7 @@ gi.require_version('Adw', '1')
 gi.require_version('Vte', '3.91')
 gi.require_version('GtkSource', '5')
 
-from gi.repository import Gtk, Gio, Adw
+from gi.repository import Gio, Adw
 from .window import ShardUpdaterWindow
 
 
