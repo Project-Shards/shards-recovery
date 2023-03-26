@@ -14,7 +14,7 @@
             <property name="halign">center</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="button_reboot">
                 <property name="label">Reboot Now</property>
                 <property name="margin-bottom">10</property>
                 <style>

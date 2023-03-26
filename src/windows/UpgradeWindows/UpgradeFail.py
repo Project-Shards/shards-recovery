@@ -29,13 +29,37 @@ import subprocess
 class UpgradeFail(Adw.Bin):
     __gtype_name__="UpgradeFail"
 
+    button_reboot = Gtk.Template.Child()
+    button_retry  = Gtk.Template.Child()
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.button = MenuButton(label="Return to Recovery", on_clicked=self.return_to_recovery)
         self.poweroff = MenuButton(label="Shut down Computer", on_clicked=self.poweroff)
         self.log = MenuButton(label="Show log", on_clicked=self.toggle_log)
+        self.button_reboot.connect('clicked', self.reboot)
+        self.button_retry.connect('clicked', self.retry)
         self.log_show = False
         self.log_window_upgradefail = LogView(logfile='/tmp/shardsrecovery.log')
+
+    def retry(self, widget):
+        self.return_to_recovery()
+        # TODO: Retry upgrade
+
+    def reboot(self, widget):
+        def reboot_yes():
+            subprocess.run(["reboot"])
+
+        dialog = YNDialog(
+            header="Reboot",
+            body="Are you sure you want to reboot the computer?",
+            yes_text="Reboot",
+            no_text="Cancel",
+            on_yes=reboot_yes,
+            on_no=None,
+            window=self.window.get_parent().get_parent().get_parent() # This is a hack to get the main window, but it works :shipit:
+        )
+        dialog.display()
 
     def poweroff(self, widget):
         def poweroff_yes():
@@ -59,7 +83,7 @@ class UpgradeFail(Adw.Bin):
                     break
                 GLib.idle_add(self.window.set_margin_top, i)
                 GLib.idle_add(self.window.set_margin_bottom, i)
-                time.sleep(0.0004)
+                time.sleep(0.001)
 
         def animate_width(self, targetwidth, currentwidth):
             for i in range(currentwidth, targetwidth, -2 if currentwidth > targetwidth else 2):
@@ -67,7 +91,7 @@ class UpgradeFail(Adw.Bin):
                     break
                 GLib.idle_add(self.window.set_margin_start, i)
                 GLib.idle_add(self.window.set_margin_end, i)
-                time.sleep(0.0004)
+                time.sleep(0.001)
         RunAsync(animate_height, None, self, targetheight, currentheight)
         RunAsync(animate_width, None, self, targetwidth, currentwidth)
 
@@ -85,8 +109,8 @@ class UpgradeFail(Adw.Bin):
             self.window.set_valign(Gtk.Align.FILL)
             self.window.set_halign(Gtk.Align.FILL)
             self.animate_resize(
-                targetwidth=self.widthmargin-int(self.widthmargin/1.5),
-                targetheight=self.heightmargin-int(self.heightmargin/1.5),
+                targetwidth=self.widthmargin,
+                targetheight=self.heightmargin,
                 currentwidth=self.widthmargin,
                 currentheight=self.heightmargin
             )
@@ -96,10 +120,10 @@ class UpgradeFail(Adw.Bin):
             self.window.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
             self.window.set_visible_child(self)
             self.animate_resize(
-                targetwidth=self.widthmargin,
-                targetheight=self.heightmargin,
-                currentwidth=self.widthmargin-int(self.widthmargin/1.5),
-                currentheight=self.heightmargin-int(self.heightmargin/1.5)
+                targetwidth=self.orig_widthmargin,
+                targetheight=self.orig_heightmargin,
+                currentwidth=self.widthmargin,
+                currentheight=self.heightmargin
             )
             self.log_show = False
             self.window.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT)
@@ -107,14 +131,14 @@ class UpgradeFail(Adw.Bin):
     def return_to_recovery(self, widget):
         self.window.on_quit_button_clicked(widget)
 
-    def on_show(self, headerbar, window, window_width, window_height):
+    def on_show(self, headerbar, window, curr_width_margin, curr_height_margin):
         self.headerbar = headerbar
         self.window = window
         self.window.add_child(self.log_window_upgradefail)
-        self.screenwidth = window_width
-        self.screenheight = window_height
-        self.heightmargin = math.ceil(abs(self.screenheight-self.window.get_allocated_height())/2)-25 # -25 to account for the headerbar
-        self.widthmargin = math.ceil(abs(self.screenwidth-self.window.get_allocated_width())/2)
+        self.heightmargin = math.ceil(curr_height_margin*0.5)
+        self.widthmargin = math.ceil(curr_width_margin*0.5)
+        self.orig_heightmargin = curr_height_margin
+        self.orig_widthmargin = curr_width_margin
         self.headerbar.set_title("Project Shards Updater")
         self.headerbar.remove_all_buttons()
         self.headerbar.add_button(self.log)

@@ -14,8 +14,8 @@
             <property name="halign">center</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkButton">
-                <property name="label">Retry Update</property>
+              <object class="GtkButton" id="button_retry">
+                <property name="label">Return to recovery</property> <!-- TODO: Retry update  -->
                 <property name="margin-bottom">10</property>
                 <style>
                   <class name="pill"/>
@@ -24,7 +24,7 @@
               </object>
             </child>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="button_reboot">
                 <property name="label">Reboot System</property>
                 <style>
                   <class name="pill"/>

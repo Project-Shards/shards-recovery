@@ -29,6 +29,8 @@ import subprocess
 class InstallFail(Adw.Bin):
     __gtype_name__="InstallFail"
 
+    button_retry = Gtk.Template.Child()
+    button_reboot = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -37,6 +39,26 @@ class InstallFail(Adw.Bin):
         self.log = MenuButton(label="Show log", on_clicked=self.toggle_log)
         self.log_show = False
         self.log_window = LogView(logfile='/tmp/shardsrecovery.log')
+        self.button_reboot.connect("clicked", self.reboot)
+        self.button_retry.connect("clicked", self.retry)
+
+    def retry(self, widget):
+        self.window.on_retry_button_clicked(widget) # TODO: retry installation
+
+    def reboot(self, widget):
+        def reboot_yes():
+            subprocess.run(["reboot"])
+
+        dialog = YNDialog(
+            header="Reboot",
+            body="Are you sure you want to reboot the computer?",
+            yes_text="Reboot",
+            no_text="Cancel",
+            on_yes=reboot_yes,
+            on_no=None,
+            window=self.window.get_parent().get_parent().get_parent() # This is a hack to get the main window, but it works :shipit:
+        )
+        dialog.display()
 
     def poweroff(self, widget):
         def poweroff_yes():

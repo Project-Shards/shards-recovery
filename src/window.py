@@ -177,8 +177,10 @@ class ShardUpdaterWindow(Adw.ApplicationWindow):
 
     def show_update_window(self, widget):
         print("show update window")
+        allocated_width = self.current_window.get_allocated_width()
+        allocated_height = self.current_window.get_allocated_height()
         self.current_window.set_visible(False)
-        self.update_window.on_show()
+        self.update_window.on_show(allocated_width, allocated_height)
         self.update_window.set_visible(True)
         self.current_window = self.update_window
 

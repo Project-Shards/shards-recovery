@@ -31,6 +31,8 @@
         </style>
         <child>
           <object class="AdwExpanderRow" id="root">
+            <property name="hexpand">true</property>
+            <property name="halign">fill</property>
             <property name="title">Upgrade Root</property>
             <property name="subtitle">Upgrades the root preloader system</property>
             <property name="icon-name">content-loading</property>

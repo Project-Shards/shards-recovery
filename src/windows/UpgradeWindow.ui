@@ -8,7 +8,7 @@
     </style>
     <property name="halign">center</property>
     <property name="valign">center</property>
-    <property name="transition-type">slide-left</property>
+    <property name="transition-type">crossfade</property>
     <property name="visible-child">upgrade</property>
     <property name="vexpand">true</property>
     <property name="hexpand">true</property>

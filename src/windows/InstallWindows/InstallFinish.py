@@ -29,6 +29,8 @@ import math
 class InstallFinish(Adw.Bin):
     __gtype_name__="InstallFinish"
 
+    button_reboot = Gtk.Template.Child()
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.button = MenuButton(label="Return to Recovery", on_clicked=self.return_to_recovery)
@@ -36,6 +38,22 @@ class InstallFinish(Adw.Bin):
         self.log = MenuButton(label="Show log", on_clicked=self.toggle_log)
         self.log_show = False
         self.log_window_installfinish = LogView(logfile='/tmp/shardsrecovery.log')
+        self.button_reboot.connect('clicked', self.reboot)
+
+    def reboot(self, widget):
+        def reboot_yes():
+            subprocess.run(["reboot"])
+
+        dialog = YNDialog(
+            header="Reboot",
+            body="Are you sure you want to reboot the computer?",
+            yes_text="Reboot",
+            no_text="Cancel",
+            on_yes=reboot_yes,
+            on_no=None,
+            window=self.window.get_parent().get_parent().get_parent() # This is a hack to get the main window, but it works :shipit:
+        )
+        dialog.display()
 
     def poweroff(self, widget):
         def poweroff_yes():
