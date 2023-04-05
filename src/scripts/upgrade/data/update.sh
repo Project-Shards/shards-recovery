@@ -3,7 +3,7 @@ set -e # Make sure the script quits when a command fails
 set -x # Output the commands being ran
 
 echo "Upgrading Data shard at /mnt/"
-arch-chroot /mnt/ pacman -Syu
+arch-chroot /mnt/ pacman -Syu --noconfirm
 
 echo "Removing Overlays"
 umount /mnt/opt
