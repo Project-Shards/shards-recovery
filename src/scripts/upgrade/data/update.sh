@@ -11,7 +11,7 @@ umount /mnt/var
 umount /mnt/usr
 
 echo "Remvong bind mounts"
-umuont /mnt/etc
+umount /mnt/etc
 umount /mnt/boot
 
 echo "Unmounting Root shard"
