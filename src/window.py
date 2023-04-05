@@ -156,7 +156,7 @@ class ShardUpdaterWindow(Adw.ApplicationWindow):
 
     def open_gparted(self, widget):
         print("open gparted")
-        subprocess.Popen(["gparted"])
+        subprocess.Popen(["sudo", "-EH", "gparted"])
 
     def open_browser(self, widget):
         print("open browser")
