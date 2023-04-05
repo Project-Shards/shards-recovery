@@ -30,7 +30,7 @@
             <style>
               <class name="window"/>
             </style>
-            <property name="padding-top">50</property>
+            <property name="margin-top">50</property>
             <property name="halign">center</property>
             <property name="valign">center</property>
             <child>
