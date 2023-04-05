@@ -32,7 +32,6 @@
             </style>
             <property name="halign">center</property>
             <property name="valign">center</property>
-            <property name="margin-top">200</property>
             <child>
               <object class="GtkBox">
                 <property name="orientation">vertical</property>
