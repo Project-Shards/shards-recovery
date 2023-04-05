@@ -6,10 +6,10 @@ echo "Remount /mnt/Shards/Desktop as read-only"
 mount -o ro,remount /mnt/Shards/Desktop
 
 echo "Creating Overlay with System, Desktop and Data for /mnt/usr"
-mount -t overlay overlay -o lowerdir=/Shards/System/usr:/Shards/Desktop/usr,upperdir=/Shards/Data/usr,workdir=/Shards/Data/tmp/usr /mnt/usr
+mount -t overlay overlay -o lowerdir=/mnt/Shards/System/usr:/mnt/Shards/Desktop/usr,upperdir=/mnt/Shards/Data/usr,workdir=/mnt/Shards/Data/tmp/usr /mnt/usr
 
 echo "Creating Overlay with System, Desktop and Data for /mnt/var"
-mount -t overlay overlay -o lowerdir=/Shards/System/var:/Shards/Desktop/var,upperdir=/Shards/Data/var,workdir=/Shards/Data/tmp/var /mnt/var
+mount -t overlay overlay -o lowerdir=/mnt/Shards/System/var:/mnt/Shards/Desktop/var,upperdir=/mnt/Shards/Data/var,workdir=/mnt/Shards/Data/tmp/var /mnt/var
 
 echo "Creating Overlay with System, Desktop and Data for /mnt/opt"
-mount -t overlay overlay -o lowerdir=/Shards/System/opt:/Shards/Desktop/opt,upperdir=/Shards/Data/opt,workdir=/Shards/Data/tmp/opt /mnt/opt
+mount -t overlay overlay -o lowerdir=/mnt/Shards/System/opt:/mnt/Shards/Desktop/opt,upperdir=/mnt/Shards/Data/opt,workdir=/mnt/Shards/Data/tmp/opt /mnt/opt
