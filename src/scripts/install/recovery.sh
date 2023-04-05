@@ -22,7 +22,7 @@ echo "Defaults pwfeedback" >> /mnt/etc/sudoers
 mkdir -p /mnt/etc/systemd/system/getty@tty1.service.d/
 touch /mnt/etc/systemd/system/getty@tty1.service.d/autologin.conf
 echo "[Service]" >> /mnt/etc/systemd/system/getty@tty1.service.d/autologin.conf
-cat  > /mnt/etc/systemd/system/getty@tty.service.d/autologin.conf << EOF
+cat  > /mnt/etc/systemd/system/getty@tty1.service.d/autologin.conf << EOF
 [Service]
 ExecStart=
 ExecStart=-/usr/bin/agetty -o '-p -f -- \\u' --autologin recovery --noclear shards %I \$TERM
