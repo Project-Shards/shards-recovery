@@ -228,6 +228,7 @@ class Upgrade(Gtk.Box):
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT
             )
+            self.write_to_log(out.stdout.decode("utf-8"))
             if out.returncode == 0:
                 GLib.idle_add(self.snapshot_desktop.set_icon_status, True)
             else:
