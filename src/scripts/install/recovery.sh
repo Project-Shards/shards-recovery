@@ -39,6 +39,8 @@ echo "-- Stopping gpg-agent --"
 set +e
 gpg_agent_pid=$(lsof -t +D /mnt/etc/pacman.d/gnupg/)
 kill "${gpg_agent_pid}"
+gpg_agent_pid=$(lsof -t +D /mnt/etc/pacman.d/gnupg/)
+kill "${gpg_agent_pid}"
 set -e
 
 echo "-- Unmounting partitions --"
