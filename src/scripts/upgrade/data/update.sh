@@ -14,5 +14,10 @@ echo "Remvong bind mounts"
 umount /mnt/etc
 umount /mnt/boot
 
+echo "Unmount Shards"
+umount /mnt/Shards/System
+umount /mnt/Shards/Desktop
+umount /mnt/Shards/Data
+
 echo "Unmounting Root shard"
 umount /mnt
