@@ -19,6 +19,7 @@ arch-chroot /mnt useradd -m -p "$(openssl passwd -1 "shards")" -s /bin/bash shar
 arch-chroot /mnt usermod -aG wheel shards
 sed 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g' /mnt/etc/sudoers
 echo "Defaults pwfeedback" >> /mnt/etc/sudoers
+mkdir -p /mnt/etc/systemd/system/getty@tty1.service.d/
 touch /mnt/etc/systemd/system/getty@tty1.service.d/autologin.conf
 echo "[Service]" >> /mnt/etc/systemd/system/getty@tty1.service.d/autologin.conf
 cat  > /mnt/etc/systemd/system/getty@tty.service.d/autologin.conf << EOF
